@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DronWay, беспилотная грузовая логистика под ключ</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#15181C;--ink2:#0E1116;--blue:#1E63E9;--blue2:#0E3FA8;--gray:#B8C0CC;--paper:#F6F8FB;--white:#FFF;--muted:#697483;--line:#E4E8EE;--card:#FFF;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.5;}
+section{scroll-margin-top:84px;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+h1,h2,h3,.disp{font-family:'Montserrat',system-ui,Arial,sans-serif;letter-spacing:-1px;}
+a{color:inherit;text-decoration:none;}
+.eyebrow{font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);}
+.muted{color:var(--muted);}
+
+/* NAV */
+header{position:sticky;top:0;z-index:50;background:rgba(21,24,28,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.07);}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;}
+.brand{display:flex;align-items:center;gap:11px;}
+.brand .wm{font-family:'Montserrat';font-weight:800;font-size:21px;letter-spacing:-1px;color:#fff;}
+.nav-links{display:flex;align-items:center;gap:26px;}
+.nav-links a{color:#C6CCD6;font-size:15px;font-weight:500;transition:color .15s;}
+.nav-links a:hover{color:#fff;}
+.btn{font-family:'Montserrat';font-weight:700;font-size:14px;padding:11px 20px;border-radius:10px;background:var(--blue);color:#fff;display:inline-block;transition:background .15s,transform .15s;border:none;cursor:pointer;}
+.btn:hover{background:#1a55cc;}
+.btn.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:#fff;}
+.btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.06);}
+.btn.dark{background:var(--ink);}
+.btn.dark:hover{background:#2a2f37;}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;}
+.burger span{width:24px;height:2px;background:#fff;border-radius:2px;}
+
+/* HERO */
+.hero{position:relative;background:var(--ink);color:#fff;overflow:hidden;}
+.hero .glow{position:absolute;width:760px;height:760px;border-radius:50%;top:-280px;right:-200px;background:radial-gradient(circle,rgba(30,99,233,.30) 0%,rgba(30,99,233,0) 62%);}
+.hero .dw{position:absolute;right:-30px;bottom:-50px;font-family:'Montserrat';font-weight:900;font-size:300px;color:rgba(255,255,255,.03);letter-spacing:-12px;line-height:1;}
+.hero .inner{position:relative;padding:108px 0 90px;}
+.hero h1{font-weight:800;font-size:58px;line-height:1.04;max-width:880px;}
+.hero p.sub{font-size:21px;color:#AEB7C4;max-width:680px;margin-top:24px;}
+.hero .ctas{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;}
+.pathline{display:flex;align-items:center;margin-top:64px;max-width:760px;}
+.dot{width:9px;height:9px;border-radius:50%;background:#3A4250;flex:0 0 auto;}
+.dot.end{width:14px;height:14px;background:var(--blue);}
+.seg{height:0;border-top:2.5px dotted #3A4250;flex:1;margin:0 7px;}
+.steplabels{display:flex;justify-content:space-between;max-width:760px;margin-top:13px;font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:1px;color:#7D8896;}
+.steplabels .on{color:var(--blue);}
+
+/* SECTION base */
+.sec{padding:84px 0;}
+.sec.dark{background:var(--ink);color:#fff;}
+.sec h2{font-weight:800;font-size:40px;line-height:1.08;margin:14px 0 0;}
+.sec .lead{font-size:20px;color:var(--muted);max-width:760px;margin-top:18px;}
+.sec.dark .lead{color:#AEB7C4;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px;}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:42px;}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:46px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 28px;}
+.sec.dark .card{background:#1C2127;border-color:#2B313A;}
+.card .n{font-family:'Montserrat';font-weight:800;font-size:12px;letter-spacing:2px;color:var(--blue);}
+.card h3{font-weight:800;font-size:22px;margin:12px 0 10px;}
+.card p{font-size:15.5px;color:var(--muted);}
+.sec.dark .card p{color:#9AA3B0;}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:46px;}
+.steps .st{padding:0 24px;border-left:1px solid var(--line);}
+.steps .st:first-child{padding-left:0;border-left:none;}
+.sec.dark .steps .st{border-color:#2B313A;}
+.steps .k{font-family:'Montserrat';font-weight:800;color:var(--blue);font-size:14px;letter-spacing:2px;}
+.steps .t{font-family:'Montserrat';font-weight:800;font-size:20px;margin:10px 0;}
+.steps p{font-size:14.5px;color:var(--muted);}
+.sec.dark .steps p{color:#9AA3B0;}
+.incl{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;}
+.incl span{background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:9px 16px;font-size:14px;font-family:'Montserrat';font-weight:600;}
+
+/* catalog */
+.pathnote{display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:1.5px;color:var(--blue);text-transform:uppercase;margin:42px 0 16px;}
+.pathnote::before{content:"";width:26px;height:2px;background:var(--blue);}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.dcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column;}
+.dcard.hvy{border-top:4px solid var(--blue);}
+.dcard.lt{border-top:4px solid var(--gray);}
+.dcard .type{font-size:12px;font-family:'Montserrat';font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.dcard .nm{font-family:'Montserrat';font-weight:800;font-size:26px;margin:8px 0 14px;}
+.dcard .pl{font-family:'Montserrat';font-weight:800;font-size:46px;line-height:1;letter-spacing:-2px;}
+.dcard .pl small{font-size:18px;color:var(--muted);font-weight:700;}
+.dcard .rows{margin:16px 0;border-top:1px solid var(--line);padding-top:14px;}
+.dcard .rows div{display:flex;justify-content:space-between;font-size:14px;padding:4px 0;color:var(--muted);}
+.dcard .rows b{color:var(--ink);font-weight:600;}
+.dcard .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.dcard .chips span{font-size:11.5px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:5px 9px;color:var(--muted);}
+.dcard .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;}
+.dcard .price{font-family:'Montserrat';font-weight:700;font-size:15px;color:var(--ink);}
+.opts{margin-top:42px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:28px 30px;}
+.opts h3{font-weight:800;font-size:20px;}
+.opts .ol{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
+.opts .ol span{font-size:14px;border:1px dashed var(--gray);border-radius:10px;padding:9px 14px;color:var(--muted);}
+
+/* models */
+.mcard{border-radius:18px;padding:32px 30px;}
+.mcard.a{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gray);}
+.mcard.b{background:var(--ink2);color:#fff;border-top:4px solid var(--blue);}
+.mcard .tag{font-family:'Montserrat';font-weight:800;font-size:12px;letter-spacing:2px;color:var(--blue);}
+.mcard h3{font-weight:800;font-size:26px;margin:12px 0 14px;}
+.mcard p{font-size:16px;color:var(--muted);margin-bottom:12px;}
+.mcard.b p{color:#AEB7C4;}
+.mcard .em{font-weight:600;color:var(--ink);}
+.mcard.b .em{color:#fff;}
+
+/* industries */
+.ind{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px;}
+.ind .i{border-radius:16px;padding:26px;border:1px solid var(--line);background:#fff;}
+.ind .i.lead-i{grid-column:span 1;background:var(--ink);color:#fff;border:none;}
+.ind .i .k{font-family:'Montserrat';font-weight:800;font-size:12px;letter-spacing:2px;color:var(--blue);}
+.ind .i h3{font-weight:800;font-size:21px;margin:10px 0 8px;}
+.ind .i p{font-size:14.5px;color:var(--muted);}
+.ind .i.lead-i p{color:#AEB7C4;}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;margin-top:44px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-family:'Montserrat';font-weight:600;color:#C6CCD6;margin-bottom:7px;letter-spacing:.5px;}
+.field input,.field textarea{width:100%;background:#1C2127;border:1px solid #2B313A;border-radius:10px;padding:13px 14px;color:#fff;font-family:'Inter';font-size:15px;}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--blue);}
+.site-big{font-family:'Montserrat';font-weight:800;font-size:40px;letter-spacing:-1px;margin-top:10px;}
+
+/* footer */
+footer{background:#0B0E12;color:#8A93A0;padding:40px 0;font-size:14px;}
+.foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;}
+.foot .wm{font-family:'Montserrat';font-weight:800;font-size:18px;color:#fff;letter-spacing:-.5px;}
+
+@media(max-width:860px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;background:var(--ink);padding:18px 28px;gap:16px;border-bottom:1px solid #2B313A;}
+  .nav-links.open{display:flex;}
+  .nav-links .btn{align-self:flex-start;}
+  .burger{display:flex;}
+  .hero h1{font-size:38px;}
+  .hero p.sub{font-size:18px;}
+  .sec h2{font-size:30px;}
+  .grid3,.grid2,.grid4,.steps,.cat-grid,.ind,.contact{grid-template-columns:1fr;}
+  .steps .st{border-left:none;padding:0 0 18px;}
+  .hero .dw{font-size:160px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <svg width="34" height="34" viewBox="0 0 120 120"><g stroke-linecap="round" transform="translate(-25,-18)"><g stroke="#fff" stroke-width="7"><line x1="85" y1="70" x2="61" y2="46"/><line x1="85" y1="70" x2="109" y2="46"/><line x1="85" y1="70" x2="61" y2="94"/><line x1="85" y1="70" x2="109" y2="94"/></g><circle cx="61" cy="46" r="13" fill="none" stroke="#fff" stroke-width="4"/><circle cx="109" cy="46" r="13" fill="none" stroke="#1E63E9" stroke-width="4"/><circle cx="61" cy="94" r="13" fill="none" stroke="#fff" stroke-width="4"/><circle cx="109" cy="94" r="13" fill="none" stroke="#fff" stroke-width="4"/><rect x="73" y="58" width="24" height="24" rx="7" fill="#fff"/></g></svg>
+      <span class="wm">Dron<span style="color:var(--blue)">Way</span></span>
+    </a>
+    <nav class="nav-links" id="menu">
+      <a href="#catalog">Каталог</a>
+      <a href="#docs">Сопровождение</a>
+      <a href="#service">Сервис</a>
+      <a href="#training">Обучение</a>
+      <a href="#industries">Отрасли</a>
+      <a href="#partners">Партнёрам</a>
+      <a href="#contacts" class="btn">Получить расчёт</a>
+    </nav>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="glow"></div><div class="dw">DW</div>
+  <div class="wrap inner">
+    <div class="eyebrow">Беспилотная грузовая логистика под ключ</div>
+    <h1 style="margin-top:20px;">Откроем грузовым дронам<br>путь в реальный бизнес</h1>
+    <p class="sub">DronWay это не магазин дронов, а оператор доступа к воздушной логистике. Поставка, легализация и эксплуатация под одной крышей</p>
+    <div class="ctas">
+      <a href="#contacts" class="btn">Получить расчёт</a>
+      <a href="#partners" class="btn ghost">Стать партнёром</a>
+    </div>
+    <div class="pathline">
+      <div class="dot"></div><div class="seg"></div><div class="dot"></div><div class="seg"></div><div class="dot"></div><div class="seg"></div><div class="dot end"></div>
+    </div>
+    <div class="steplabels"><span>ШАГ 0</span><span>ШАГ 1</span><span>ШАГ 2</span><span class="on">ПОЛЁТ</span></div>
+  </div>
+</section>
+
+<!-- ЧТО МЫ ДЕЛАЕМ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow">Что мы делаем</div>
+    <h2>Три зоны ответственности под одной крышей</h2>
+    <div class="grid3">
+      <div class="card"><div class="n">ЖЕЛЕЗО</div><h3>Поставка</h3><p>Грузовые борта от 10 до 150 кг, комплектующие, ЗИП и подменный фонд</p></div>
+      <div class="card"><div class="n">ЛЕГАЛИЗАЦИЯ</div><h3>Сопровождение</h3><p>Учёт, регистрация, лётная годность, сертификат эксплуатанта и пилоты, всё под ключ</p></div>
+      <div class="card"><div class="n">РЕЗУЛЬТАТ</div><h3>Эксплуатация</h3><p>Дрон как сервис: доставка по подписке или за вылет, с ТО и сопровождением полётов</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- СОПРОВОЖДЕНИЕ / ПУТЬ -->
+<section class="sec dark" id="docs">
+  <div class="wrap">
+    <div class="eyebrow">Сопровождение и документы</div>
+    <h2>От «хочу дрон» до «он легально возит»</h2>
+    <p class="lead">Грузовой борт свыше 30 кг это путь через несколько госорганов. Мы проходим его за клиента, по шагам</p>
+    <div class="steps">
+      <div class="st"><div class="k">ШАГ 0</div><div class="t">Подбор и проверка</div><p>Борт под задачу, аудит региона и маршрута, выбор модели работы, расчёт экономики</p></div>
+      <div class="st"><div class="k">ШАГ 1</div><div class="t">Документы на борт</div><p>Учёт для лёгких или госрегистрация для тяжёлых. Паспорт борта даёт завод</p></div>
+      <div class="st"><div class="k">ШАГ 2</div><div class="t">Лётная годность</div><p>Сертификат через акт оценки. На территории ЭПР достаточно самого акта</p></div>
+      <div class="st"><div class="k">ШАГ 3</div><div class="t">Право возить</div><p>Сертификат эксплуатанта, пилоты, страховка и планы полётов на каждый вылет</p></div>
+    </div>
+    <div class="incl">
+      <span>Постановка на учёт</span><span>Госрегистрация</span><span>Акт оценки и СЛГ</span><span>Сертификат эксплуатанта</span><span>Свидетельство внешнего пилота</span><span>Страхование</span><span>Планы полётов и ИВП</span><span>Согласование с регионом</span>
+    </div>
+  </div>
+</section>
+
+<!-- ДВЕ МОДЕЛИ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow">Как с нами работать</div>
+    <h2>Свой борт или дрон как сервис</h2>
+    <div class="grid2">
+      <div class="mcard a">
+        <div class="tag" style="color:var(--ink)">МОДЕЛЬ А</div><h3>Свой борт</h3>
+        <p>Вы владеете дроном и становитесь эксплуатантом. Мы продаём борт, ведём все документы и обучаем пилотов</p>
+        <p class="em">Кому: крупным компаниям, готовым к собственному парку</p>
+      </div>
+      <div class="mcard b">
+        <div class="tag">МОДЕЛЬ Б</div><h3>Дрон как сервис</h3>
+        <p>Вы покупаете результат, саму доставку. Сертификат, пилоты, разрешения и ТО держим мы</p>
+        <p class="em">Барьер почти нулевой, оплата по подписке или за вылет</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- КАТАЛОГ -->
+<section class="sec" id="catalog" style="background:var(--white);">
+  <div class="wrap">
+    <div class="eyebrow">Каталог</div>
+    <h2>Линейка грузовых дронов 10–150 кг</h2>
+    <p class="lead">Порог 30 кг делит линейку на два пути: лёгкий, с минимумом документов, и тяжёлый, с полным циклом легализации</p>
+    <div class="pathnote">до 30 кг · лёгкий путь</div>
+    <div class="cat-grid" id="cat-light"></div>
+    <div class="pathnote">свыше 30 кг · тяжёлый путь</div>
+    <div class="cat-grid" id="cat-heavy"></div>
+    <div class="opts">
+      <h3>Опции и допоборудование</h3>
+      <div class="ol">
+        <span>RTK, сантиметровое позиционирование</span><span>Защита от спуфинга и джамминга (CRPA)</span><span>Камера с тепловизором на подвесе</span><span>8К камера с ночным видением</span><span>Дополнительные АКБ</span><span>Защищённая связь и НСУ «Гнездо»</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ДРОН КАК СЕРВИС -->
+<section class="sec dark" id="service">
+  <div class="wrap">
+    <div class="eyebrow">Дрон как сервис</div>
+    <h2>Вам не нужен ни сертификат, ни пилот</h2>
+    <p class="lead">По Модели Б всю регуляторику и эксплуатацию держим мы или наш партнёр-эксплуатант. Вы платите за результат</p>
+    <div class="grid4">
+      <div class="card"><h3 style="font-size:19px;">Аренда с экипажем</h3><p>Борт и обученный пилот приезжают на ваш объект</p></div>
+      <div class="card"><h3 style="font-size:19px;">Оплата за вылет</h3><p>Или регулярная подписка под повторяющийся маршрут</p></div>
+      <div class="card"><h3 style="font-size:19px;">SLA и отклик</h3><p>Гарантированное время реакции на заявку</p></div>
+      <div class="card"><h3 style="font-size:19px;">Подменный фонд</h3><p>Борт на замену, чтобы работа не вставала из-за ремонта</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ОБУЧЕНИЕ -->
+<section class="sec" id="training">
+  <div class="wrap">
+    <div class="eyebrow">Обучение</div>
+    <h2>Подготовка внешних пилотов</h2>
+    <p class="lead">Если вы идёте по Модели А, готовим ваших операторов и помогаем получить свидетельство внешнего пилота через аккредитованный учебный центр</p>
+    <div class="grid3">
+      <div class="card"><div class="n">СВИДЕТЕЛЬСТВО</div><h3>Внешний пилот</h3><p>Теория, тренажёр и лётная практика по программе АУЦ</p></div>
+      <div class="card"><div class="n">ПОД ВАШ ПАРК</div><h3>Операторы клиента</h3><p>Готовим пилотов под конкретные борта и сценарии работы</p></div>
+      <div class="card"><div class="n">ПОДДЕРЖКА</div><h3>Ресертификация</h3><p>Поддерживаем квалификацию по мере изменения правил</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ОТРАСЛИ -->
+<section class="sec dark" id="industries">
+  <div class="wrap">
+    <div class="eyebrow">Отрасли</div>
+    <h2>Где грузовой борт окупается быстрее всего</h2>
+    <div class="ind">
+      <div class="i lead-i"><div class="k">ОСНОВНОЙ ФОКУС</div><h3>Телеком</h3><p>Вышки, базовые станции, аварийные работы, удалённые объекты. Доставка ЗИП и инструмента без повторного выезда</p></div>
+      <div class="i"><div class="k" style="color:var(--ink)">КАРЬЕРЫ</div><h3>Добыча</h3><p>Короткие плечи, сложный рельеф, дорогой простой техники</p></div>
+      <div class="i"><div class="k" style="color:var(--ink)">ЭНЕРГЕТИКА</div><h3>ЛЭП и сети</h3><p>Доставка приборов и ЗИП на удалённые энергообъекты</p></div>
+      <div class="i"><div class="k" style="color:var(--ink)">НЕФТЕСЕРВИС</div><h3>Промыслы</h3><p>Логистика на труднодоступных промышленных площадках</p></div>
+      <div class="i"><div class="k" style="color:var(--ink)">ЛЕС И МЧС</div><h3>Удалёнка</h3><p>Срочная доставка в зоны, куда тяжело добраться по земле</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ПАРТНЁРАМ -->
+<section class="sec" id="partners">
+  <div class="wrap">
+    <div class="eyebrow">Партнёрам-эксплуатантам</div>
+    <h2>Парк и пилоты у вас есть. Контракты добавим мы</h2>
+    <p class="lead">Закрываем разрыв между вашим парком и потоком грузовых контрактов. Выберите свою роль или совместите</p>
+    <div class="grid3">
+      <div class="card"><div class="n">РЕФЕРАЛ</div><h3>Приводите клиента</h3><p>Передаёте контакт с потребностью, получаете процент с контракта</p></div>
+      <div class="card" style="border:2px solid var(--blue);"><div class="n">ЭКСПЛУАТАНТ</div><h3>Летаете в регионе</h3><p>Отрабатываете наши контракты по Модели Б на своей территории, делим выручку</p></div>
+      <div class="card"><div class="n">ПОКУПКА</div><h3>Берёте борт</h3><p>Расширяете парк на партнёрских условиях, с нашим сервисом</p></div>
+    </div>
+    <div style="margin-top:34px;"><a href="#contacts" class="btn">Стать партнёром</a></div>
+  </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section class="sec dark" id="contacts">
+  <div class="wrap">
+    <div class="eyebrow">Контакты</div>
+    <h2>Расскажите задачу, посчитаем экономику</h2>
+    <div class="contact">
+      <div>
+        <p class="lead" style="margin-top:6px;">Опишите маршрут, груз и регион. Подберём борт, путь легализации и модель работы под вашу задачу</p>
+        <div style="font-size:13px;color:#7D8896;font-family:'Montserrat';font-weight:700;letter-spacing:2px;margin-top:36px;">САЙТ</div>
+        <div class="site-big">dronway<span style="color:var(--blue)">.com</span></div>
+      </div>
+      <form onsubmit="return false;">
+        <div class="field"><label>Имя</label><input type="text" placeholder="Как к вам обращаться"></div>
+        <div class="field"><label>Компания</label><input type="text" placeholder="Название компании"></div>
+        <div class="field"><label>Телефон или почта</label><input type="text" placeholder="Контакт для связи"></div>
+        <div class="field"><label>Задача</label><textarea rows="3" placeholder="Груз, маршрут, регион"></textarea></div>
+        <button class="btn" type="submit" style="width:100%;padding:14px;">Отправить заявку</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="wm">Dron<span style="color:var(--blue)">Way</span></div>
+      <div style="margin-top:8px;">Беспилотная грузовая логистика под ключ</div>
+    </div>
+    <div style="text-align:right;">
+      <div>dronway.com</div>
+      <div style="margin-top:8px;color:#5B6470;">© 2026 DronWay</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// mobile menu
+document.getElementById('burger').onclick=function(){document.getElementById('menu').classList.toggle('open');};
+document.querySelectorAll('#menu a').forEach(function(a){a.onclick=function(){document.getElementById('menu').classList.remove('open');};});
+
+// catalog
+var drones=[
+ {nm:'DW-10',type:'Гексакоптер',pl:10,del:'до 14 км с грузом 10 кг',air:'46 мин в воздухе',rng:'40 км запас хода',cls:'lt'},
+ {nm:'DW-15',type:'Гексакоптер',pl:15,del:'до 23 км с грузом 10 кг',air:'66 мин в воздухе',rng:'58 км запас хода',cls:'lt'},
+ {nm:'DW-30',type:'Гексакоптер',pl:30,del:'до 21 км с грузом 30 кг',air:'78 мин в воздухе',rng:'68 км запас хода',cls:'hvy'},
+ {nm:'DW-40',type:'Гексакоптер',pl:40,del:'до 18 км с грузом 20 кг',air:'59 мин в воздухе',rng:'50 км запас хода',cls:'hvy'},
+ {nm:'DW-70',type:'Квадрокоптер',pl:70,del:'до 9 км с грузом 70 кг',air:'40 мин в воздухе',rng:'32 км запас хода',cls:'hvy'},
+ {nm:'DW-100',type:'Гексакоптер',pl:100,del:'до 12 км с грузом 100 кг',air:'47 мин в воздухе',rng:'36 км запас хода',cls:'hvy'},
+ {nm:'DW-150',type:'Квадрокоптер',pl:150,del:'до 7 км с грузом 150 кг',air:'40 мин в воздухе',rng:'32 км запас хода',cls:'hvy'}
+];
+function card(d){
+ return '<div class="dcard '+d.cls+'">'
+  +'<div class="type">'+d.type+'</div>'
+  +'<div class="nm">'+d.nm+'</div>'
+  +'<div class="pl">'+d.pl+' <small>кг</small></div>'
+  +'<div class="rows"><div><span>Дальность</span><b>'+d.del+'</b></div><div><span>Автономность</span><b>'+d.air+'</b></div><div><span>Без нагрузки</span><b>'+d.rng+'</b></div></div>'
+  +'<div class="chips"><span>Промышленный автопилот</span><span>Шифрованная связь</span><span>Система сброса груза</span></div>'
+  +'<div class="foot"><span class="price">Цена по запросу</span><a href="#contacts" class="btn dark" style="padding:9px 16px;font-size:13px;">Запросить</a></div>'
+  +'</div>';
+}
+document.getElementById('cat-light').innerHTML=drones.filter(function(d){return d.cls==='lt';}).map(card).join('');
+document.getElementById('cat-heavy').innerHTML=drones.filter(function(d){return d.cls==='hvy';}).map(card).join('');
+</script>
+</body>
+</html>
