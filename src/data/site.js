@@ -1,0 +1,25 @@
+export const site = {
+  name: 'DronWay',
+  domain: 'dronway.com',
+  tagline: 'Дроны под ключ: от подбора до легальных полётов',
+  nav: [
+    { label: 'Каталог', href: '/catalog' },
+    { label: 'Услуги', href: '/services' },
+    { label: 'Виды дронов', href: '/types' },
+    { label: 'Применение', href: '/applications' },
+    { label: 'Этапы', href: '/process' },
+    { label: 'Партнёрам', href: '/partners' },
+  ],
+  footer: [
+    { label: 'Каталог', href: '/catalog' },
+    { label: 'Услуги', href: '/services' },
+    { label: 'Виды дронов', href: '/types' },
+    { label: 'Применение', href: '/applications' },
+    { label: 'Этапы работы', href: '/process' },
+    { label: 'Дрон как сервис', href: '/daas' },
+    { label: 'Обучение', href: '/training' },
+    { label: 'Партнёрам', href: '/partners' },
+    { label: 'О нас', href: '/about' },
+    { label: 'Контакты', href: '/contacts' },
+  ],
+};

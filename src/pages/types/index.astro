@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { types } from '../../data/types.js';
+---
+<Base title="Виды дронов" description="Виды дронов в гражданском секторе: мультироторные, самолётные, VTOL, конвертопланы, привязные, для ЛЭП, складские, дронопорты" active="/types">
+  <PageHead eyebrow="Виды дронов" title="Какие типы дронов бывают и что умеют"
+    lead="Десять классов техники, которые применяются в гражданском секторе. По каждому описание, характеристики, задачи и примеры в России. Мы мультивендор и можем поставить любой из них"
+    crumbs={[{label:'Виды дронов'}]} />
+  <section class="sec white">
+    <div class="wrap">
+      <div class="grid g3" style="margin-top:0;">
+        {types.map((t) => (
+          <a class="card" href={`/types/${t.slug}`}>
+            <div class="n">{t.badge.toUpperCase()}</div>
+            <h3>{t.name}</h3>
+            <p>{t.short}</p>
+            <span class="more">Подробнее →</span>
+          </a>
+        ))}
+      </div>
+      <div style="margin-top:46px;"><CtaBand title="Нужен конкретный тип под задачу?" text="Подберём борт и сенсор, посчитаем стоимость и возьмём документы на себя" /></div>
+    </div>
+  </section>
+</Base>

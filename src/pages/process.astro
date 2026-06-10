@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { stages } from '../data/stages.js';
+---
+<Base title="Этапы работы" description="Этапы работы DronWay: от подбора и поставки до документов, лётной годности, разрешений и эксплуатации" active="/process">
+  <PageHead eyebrow="Как мы работаем" title="Путь от завода до полёта, семь этапов"
+    lead="Показываем весь маршрут прозрачно. На каждом этапе понятно, что происходит и что берём на себя мы"
+    crumbs={[{label:'Этапы'}]} />
+  <section class="sec white">
+    <div class="wrap">
+      <div class="grid g2" style="margin-top:0;">
+        {stages.map((s) => (
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div style="width:40px;height:40px;border-radius:11px;background:var(--ink);color:#fff;font-family:'Montserrat';font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">{s.num}</div>
+              <h3 style="margin:0;">{s.name}</h3>
+            </div>
+            <p style="margin-top:14px;">{s.desc}</p>
+            <div class="chips" style="margin-top:14px;">{s.chips.map((c) => (<span>{c}</span>))}</div>
+          </div>
+        ))}
+      </div>
+      <div style="margin-top:46px;"><CtaBand title="Готовы пройти этот путь с вами" text="От первой консультации до регулярных легальных полётов под единой ответственностью" /></div>
+    </div>
+  </section>
+</Base>

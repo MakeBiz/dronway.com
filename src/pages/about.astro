@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+const points = [
+  ['Кто мы','Команда, которая собирает рынок дронов в одно окно. Не делаем один кусок, а ведём клиента по всему пути от подбора до регулярных полётов'],
+  ['Что отличает','Мы независимы от одного производителя и берём единую ответственность за результат. Это и есть наша главная разница с рынком'],
+  ['Как работаем','Прозрачно считаем экономику, честно рекомендуем технику, ведём документы и страхование, держим сервис'],
+];
+---
+<Base title="О нас" description="О компании DronWay: единый интегратор по дронам, от подбора и поставки до легальных полётов" active="">
+  <PageHead eyebrow="О нас" title="Единый интегратор по дронам"
+    lead="DronWay появился из простой мысли: рынок дронов разорван на куски, и клиенту приходится собирать решение из десятка подрядчиков. Мы делаем это за него"
+    crumbs={[{label:'О нас'}]} />
+  <section class="sec white">
+    <div class="wrap">
+      <div class="grid g3" style="margin-top:0;">
+        {points.map(([t,d]) => (<div class="card"><h3 style="font-size:19px;">{t}</h3><p>{d}</p></div>))}
+      </div>
+      <div style="margin-top:46px;"><CtaBand /></div>
+    </div>
+  </section>
+</Base>

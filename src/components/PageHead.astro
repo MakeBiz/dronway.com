@@ -1,0 +1,19 @@
+---
+const { eyebrow, title, lead, crumbs = [] } = Astro.props;
+---
+<section class="hero" style="padding:64px 0 70px;">
+  <div class="glow"></div>
+  <div class="wrap">
+    {crumbs.length > 0 && (
+      <div class="crumbs" style="color:#8A93A0;">
+        <a href="/" style="color:#8A93A0;">Главная</a>
+        {crumbs.map((c) => (
+          <span><span class="sep">/</span>{c.href ? <a href={c.href} style="color:#8A93A0;">{c.label}</a> : <span style="color:#C2CAD6;">{c.label}</span>}</span>
+        ))}
+      </div>
+    )}
+    {eyebrow && <div class="eyebrow" style="margin-top:18px;color:#6BA0FF;">{eyebrow}</div>}
+    <h1 style="font-size:42px;margin-top:12px;">{title}</h1>
+    {lead && <p style="margin-top:18px;">{lead}</p>}
+  </div>
+</section>

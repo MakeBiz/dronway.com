@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { applications } from '../../data/applications.js';
+---
+<Base title="Применение" description="Применение дронов: ЛЭП, теплотрассы, трубопроводы, вышки, склады, стройка, охрана периметра, картография" active="/applications">
+  <PageHead eyebrow="Применение" title="Что обследуем, снимаем и возим"
+    lead="Под каждую задачу подбираем тип борта и сенсор, от тепловизора до лазерного сканера. Закрываем съёмку, инспекцию и доставку"
+    crumbs={[{label:'Применение'}]} />
+  <section class="sec white">
+    <div class="wrap">
+      <div class="grid g3" style="margin-top:0;">
+        {applications.map((a) => (
+          <a class="card" href={`/applications/${a.slug}`}>
+            <div class="n">{a.tag.toUpperCase()}</div>
+            <h3>{a.name}</h3>
+            <p>{a.short}</p>
+            <span class="more">Подробнее →</span>
+          </a>
+        ))}
+      </div>
+      <div style="margin-top:46px;"><CtaBand title="Ваша задача в списке?" text="Опишите объект и что нужно получить, подберём борт и сенсор и посчитаем стоимость работ" /></div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { types } from '../../data/types.js';
+export function getStaticPaths() {
+  return types.map((t) => ({ params: { slug: t.slug }, props: { t } }));
+}
+const { t } = Astro.props;
+const others = types.filter((x) => x.slug !== t.slug).slice(0, 4);
+---
+<Base title={t.name} description={`${t.name} (${t.badge}). ${t.short}`} active="/types">
+  <PageHead eyebrow={`Тип дрона · ${t.badge}`} title={t.name} lead={t.short}
+    crumbs={[{label:'Виды дронов', href:'/types'}, {label:t.name}]} />
+  <section class="sec white">
+    <div class="wrap">
+      <div class="detail">
+        <div>
+          <div class="eyebrow">Что это</div>
+          <p style="font-size:16px;color:var(--muted);margin-top:14px;line-height:1.6;">{t.desc}</p>
+          <div class="eyebrow" style="margin-top:32px;">Функционал и особенности</div>
+          <ul class="flist" style="margin-top:16px;">{t.features.map((f) => (<li>{f}</li>))}</ul>
+          <div class="eyebrow" style="margin-top:30px;">Под какие задачи</div>
+          <div class="chips" style="margin-top:14px;">{t.tasks.map((x) => (<span>{x}</span>))}</div>
+        </div>
+        <div>
+          <div class="spec">
+            <div class="row"><span class="k" style="font-family:'Montserrat';font-weight:800;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);">Характеристики</span><span></span></div>
+            {t.specs.map((sp) => (<div class="row"><span class="k">{sp}</span><span class="v" style="color:var(--blue);">✓</span></div>))}
+          </div>
+          <div class="spec" style="margin-top:16px;padding:20px 22px;">
+            <div class="eyebrow">Примеры в РФ</div>
+            <p style="font-size:15px;margin-top:8px;color:var(--muted);">{t.examples}</p>
+          </div>
+          <a href="/contacts" class="btn lg" style="margin-top:18px;width:100%;">Подобрать борт этого типа</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow">Другие виды дронов</div>
+      <h2 class="h" style="font-size:28px;">Сравните классы между собой</h2>
+      <div class="grid g4">
+        {others.map((o) => (
+          <a class="card" href={`/types/${o.slug}`}><div class="n">{o.badge.toUpperCase()}</div><h3 style="font-size:18px;">{o.name}</h3><p>{o.short}</p></a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

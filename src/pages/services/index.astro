@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services } from '../../data/services.js';
+---
+<Base title="Услуги" description="Услуги DronWay: подбор и поставка, документы, логистика, эксплуатация, обучение, страхование, партнёрство" active="/services">
+  <PageHead eyebrow="Услуги" title="Весь цикл по дронам в одной услуге"
+    lead="Восемь направлений, которые вместе закрывают путь от подбора борта до легальных регулярных полётов. Берём столько, сколько вам нужно, вплоть до полного под ключ"
+    crumbs={[{label:'Услуги'}]} />
+  <section class="sec white">
+    <div class="wrap">
+      <div class="grid g3" style="margin-top:0;">
+        {services.map((s) => (
+          <a class="card" href={`/services/${s.slug}`}>
+            <div class="n">{s.icon}</div>
+            <h3>{s.name}</h3>
+            <p>{s.short}</p>
+            <span class="more">Подробнее →</span>
+          </a>
+        ))}
+      </div>
+      <div style="margin-top:46px;"><CtaBand /></div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { services } from '../../data/services.js';
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+const others = services.filter((x) => x.slug !== s.slug).slice(0, 4);
+---
+<Base title={s.name} description={`${s.name}. ${s.short}`} active="/services">
+  <PageHead eyebrow="Услуга" title={s.name} lead={s.short}
+    crumbs={[{label:'Услуги', href:'/services'}, {label:s.name}]} />
+  <section class="sec white">
+    <div class="wrap">
+      <div class="detail">
+        <div>
+          <div class="eyebrow">Что это</div>
+          <p style="font-size:16px;color:var(--muted);margin-top:14px;line-height:1.6;">{s.desc}</p>
+          <div class="eyebrow" style="margin-top:32px;">Что входит</div>
+          <ul class="flist" style="margin-top:16px;">
+            {s.includes.map((i) => (<li>{i}</li>))}
+          </ul>
+        </div>
+        <div>
+          <div class="spec" style="padding:22px;">
+            <div class="eyebrow">Результат</div>
+            <p style="font-size:16px;margin-top:10px;line-height:1.55;">{s.result}</p>
+          </div>
+          <a href="/contacts" class="btn lg" style="margin-top:18px;width:100%;">Обсудить задачу</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow">Другие услуги</div>
+      <h2 class="h" style="font-size:28px;">Соберём пакет под вас</h2>
+      <div class="grid g4">
+        {others.map((o) => (
+          <a class="card" href={`/services/${o.slug}`}><div class="n">{o.icon}</div><h3 style="font-size:18px;">{o.name}</h3><p>{o.short}</p></a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { drones } from '../../data/drones.js';
+
+export function getStaticPaths() {
+  return drones.map((d) => ({ params: { slug: d.slug }, props: { d } }));
+}
+const { d } = Astro.props;
+const klassLabel = d.klass === 'light' ? 'Лёгкий, путь учёта' : 'Тяжёлый, полный цикл легализации';
+const others = drones.filter((x) => x.slug !== d.slug).slice(0, 4);
+---
+<Base title={d.name} description={`${d.name}, ${d.frame.toLowerCase()} DronWay: нагрузка ${d.payload} кг, время ${d.flight} мин. ${d.tagline}`} active="/catalog">
+  <PageHead eyebrow={`Грузовой дрон · ${d.frame}`} title={d.name} lead={d.tagline}
+    crumbs={[{label:'Каталог', href:'/catalog'}, {label:d.name}]} />
+
+  <section class="sec white">
+    <div class="wrap">
+      <div class="detail">
+        <div>
+          <div class="eyebrow">О модели</div>
+          <h2 class="h" style="font-size:28px;">{d.tagline}</h2>
+          <p style="font-size:16px;color:var(--muted);margin-top:14px;line-height:1.6;">{d.desc}</p>
+
+          <div class="eyebrow" style="margin-top:34px;">Функционал и особенности</div>
+          <ul class="flist" style="margin-top:16px;">
+            {d.features.map((f) => (<li>{f}</li>))}
+          </ul>
+
+          <div class="eyebrow" style="margin-top:30px;">Под какие задачи</div>
+          <div class="chips" style="margin-top:14px;">
+            {d.tasks.map((t) => (<span>{t}</span>))}
+          </div>
+
+          <div class="eyebrow" style="margin-top:30px;">Опции и допоборудование</div>
+          <div class="chips" style="margin-top:14px;">
+            {d.options.map((o) => (<span>{o}</span>))}
+          </div>
+        </div>
+
+        <div>
+          <div class="spec">
+            <div class="row"><span class="k">Нагрузка</span><span class="v blue">{d.payload} кг</span></div>
+            <div class="row"><span class="k">Время полёта</span><span class="v">{d.flight} мин</span></div>
+            <div class="row"><span class="k">Схема</span><span class="v">{d.frame}</span></div>
+            <div class="row"><span class="k">Класс по массе</span><span class="v">{klassLabel}</span></div>
+            <div class="row"><span class="k">Взлёт и посадка</span><span class="v">Вертикальные</span></div>
+            <div class="row"><span class="k">Документы</span><span class="v">{d.klass === 'light' ? 'Учёт' : 'Регистрация и СЛГ'}</span></div>
+          </div>
+          <p class="note" style="color:var(--muted);">Точные характеристики (дальность, скорость, размеры) уточняются под конфигурацию и поставщика</p>
+          <a href="/contacts" class="btn lg" style="margin-top:18px;width:100%;">Запросить расчёт и КП</a>
+          <a href="/daas" class="btn lg ghost" style="margin-top:12px;width:100%;color:var(--ink);border-color:var(--line);">Взять как сервис</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow">Другие модели линейки</div>
+      <h2 class="h" style="font-size:28px;">Сравните с соседними бортами</h2>
+      <div class="grid g4">
+        {others.map((o) => (
+          <a class="card" href={`/catalog/${o.slug}`}>
+            <div class="n">{o.frame.toUpperCase()}</div>
+            <h3>{o.name}</h3>
+            <p>{o.payload} кг · {o.flight} мин</p>
+            <span class="more">Подробнее →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

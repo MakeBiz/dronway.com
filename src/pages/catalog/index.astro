@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { drones, droneOptionsGlobal } from '../../data/drones.js';
+import { types } from '../../data/types.js';
+const light = drones.filter((d) => d.klass === 'light');
+const heavy = drones.filter((d) => d.klass === 'heavy');
+---
+<Base title="Каталог" description="Каталог дронов DronWay: грузовая линейка DW 10-150 кг и виды дронов под разные задачи" active="/catalog">
+  <PageHead eyebrow="Каталог" title="Грузовые дроны и виды техники"
+    lead="Сначала наша грузовая линейка DW от 10 до 150 кг, ниже остальные типы дронов, которые подбираем у разных поставщиков под вашу задачу"
+    crumbs={[{label:'Каталог'}]} />
+
+  <section class="sec white">
+    <div class="wrap">
+      <div class="eyebrow">Грузовые дроны DW</div>
+      <h2 class="h">Линейка для доставки и снабжения</h2>
+      <p class="lead">Порог взлётной массы 30 кг делит технику на два пути: лёгкий, с минимумом документов, и тяжёлый, с полным циклом легализации, который мы ведём за вас</p>
+
+      <div class="pathnote">до 30 кг · лёгкий путь</div>
+      <div class="grid g3">
+        {light.map((d) => (
+          <a class="card" href={`/catalog/${d.slug}`}>
+            <div class="n">{d.frame.toUpperCase()}</div>
+            <h3>{d.name}</h3>
+            <p>{d.tagline}</p>
+            <p style="margin-top:10px;color:var(--ink);font-family:'Montserrat';font-weight:700;">{d.payload} кг · {d.flight} мин</p>
+            <span class="more">Характеристики →</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="pathnote">свыше 30 кг · тяжёлый путь</div>
+      <div class="grid g4">
+        {heavy.map((d) => (
+          <a class="card" href={`/catalog/${d.slug}`}>
+            <div class="n">{d.frame.toUpperCase()}</div>
+            <h3>{d.name}</h3>
+            <p>{d.tagline}</p>
+            <p style="margin-top:10px;color:var(--ink);font-family:'Montserrat';font-weight:700;">{d.payload} кг · {d.flight} мин</p>
+            <span class="more">Характеристики →</span>
+          </a>
+        ))}
+      </div>
+
+      <div style="margin-top:42px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:28px 30px;">
+        <h3 style="font-weight:800;font-size:20px;">Опции и допоборудование</h3>
+        <div class="chips" style="margin-top:16px;">
+          {droneOptionsGlobal.map((o) => (<span>{o}</span>))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow">Виды дронов</div>
+      <h2 class="h">Не только грузовые, под задачу подберём любой тип</h2>
+      <p class="lead">Мы мультивендор. Если задача не про доставку, а про инспекцию, мониторинг или охрану, подбираем нужный тип борта у проверенных производителей</p>
+      <div class="grid g4">
+        {types.map((t) => (
+          <a class="card" href={`/types/${t.slug}`}>
+            <div class="n">{t.badge.toUpperCase()}</div>
+            <h3 style="font-size:18px;">{t.name}</h3>
+            <p>{t.short}</p>
+          </a>
+        ))}
+      </div>
+      <div style="margin-top:46px;"><CtaBand title="Не нашли нужный борт?" text="Опишите задачу, подберём тип, модель и сенсор под неё и посчитаем стоимость" /></div>
+    </div>
+  </section>
+</Base>
