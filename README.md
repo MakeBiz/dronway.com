@@ -1,29 +1,36 @@
 # Сайт DronWay
 
-Статический одностраничный сайт. Один файл index.html, шрифты подключаются с Google Fonts, иконка в favicon.svg
+Статический одностраничный сайт DronWay с формой заявки, которая шлёт лиды в Telegram. Шрифты подключаются с Google Fonts, иконка в favicon.svg
 
 ## Структура
 - index.html: весь сайт
 - favicon.svg: иконка вкладки
+- api/lead.js: серверная функция Vercel, принимает форму и отправляет заявку в Telegram
 - README.md: этот файл
 
 ## Локальный просмотр
-Откройте index.html в браузере, сервер не нужен
+Откройте index.html в браузере, сервер не нужен. Форма заявки заработает только после деплоя на Vercel, потому что ей нужна серверная функция
 
 ## Деплой на Vercel
-1. Создайте репозиторий на GitHub и загрузите эти файлы в корень
-2. В Vercel: Add New → Project → импортируйте репозиторий
-3. Framework Preset оставьте Other, поля сборки пустыми, Vercel отдаёт index.html как есть
+1. Создайте репозиторий на GitHub и загрузите туда все файлы, обязательно сохранив папку api
+2. В Vercel: Add New, затем Project, импортируйте репозиторий
+3. Framework Preset оставьте Other, поля сборки пустыми, Vercel сам отдаёт index.html и поднимает функцию из папки api
 4. Нажмите Deploy, Vercel выдаст ссылку вида your-project.vercel.app
 
-Конфиг не нужен: статический index.html в корне Vercel подхватывает сам
+## Заявки в Telegram
+Чтобы форма падала в Telegram, нужен бот и две переменные окружения
+1. В Telegram через @BotFather создайте бота командой /newbot и скопируйте токен
+2. Напишите боту любое сообщение, затем откройте ссылку https://api.telegram.org/bot<ТОКЕН>/getUpdates и возьмите из ответа значение chat id
+3. В Vercel: Settings, затем Environment Variables, добавьте две переменные:
+   - TELEGRAM_BOT_TOKEN со значением токена
+   - TELEGRAM_CHAT_ID со значением chat id
+4. Сделайте редеплой, переменные применяются только на новом деплое
 
 ## Домен dronway.com
-1. Проект в Vercel → Settings → Domains → добавьте dronway.com
+1. Проект в Vercel: Settings, затем Domains, добавьте dronway.com
 2. У регистратора домена пропишите записи, которые покажет Vercel, обычно это:
-   - dronway.com (apex): A → 76.76.21.21
-   - www: CNAME → cname.vercel-dns-0.com
-   - либо отдайте весь DNS Vercel через NS ns1.vercel-dns.com и ns2.vercel-dns.com
-3. После распространения DNS Vercel сам выпустит сертификат, сайт откроется на dronway.com
+   - dronway.com (apex): запись A со значением 76.76.21.21
+   - www: запись CNAME со значением cname.vercel-dns-0.com
+3. После распространения DNS Vercel сам выпустит сертификат и сайт откроется на dronway.com
 
 Применяйте значения, которые Vercel показывает именно для вашего домена, они приоритетнее

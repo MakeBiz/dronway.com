@@ -136,6 +136,18 @@ footer{background:#0B0E12;color:#8A93A0;padding:40px 0;font-size:14px;}
 .foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;}
 .foot .wm{font-family:'Montserrat';font-weight:800;font-size:18px;color:#fff;letter-spacing:-.5px;}
 
+.timeline{margin-top:42px;max-width:940px;}
+.tl-item{display:flex;gap:24px;position:relative;padding-bottom:28px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-num{width:42px;height:42px;border-radius:50%;background:#1C2127;border:1px solid #2B313A;color:#fff;font-family:'Montserrat';font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;position:relative;z-index:1;}
+.tl-item:last-child .tl-num{background:var(--blue);border-color:var(--blue);}
+.tl-line{position:absolute;left:20px;top:42px;bottom:-2px;border-left:2px dotted #2B313A;}
+.tl-item:last-child .tl-line{display:none;}
+.tl-body{flex:1;}
+.tl-body h3{font-family:'Montserrat';font-weight:800;font-size:20px;color:#fff;}
+.tl-body p{color:#9AA3B0;font-size:15.5px;margin:6px 0 11px;line-height:1.5;}
+.tl-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.tl-chips span{font-size:12.5px;color:#C2CAD6;background:#1C2127;border:1px solid #2B313A;border-radius:8px;padding:5px 11px;}
 @media(max-width:860px){
   .nav-links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;background:var(--ink);padding:18px 28px;gap:16px;border-bottom:1px solid #2B313A;}
   .nav-links.open{display:flex;}
@@ -160,8 +172,9 @@ footer{background:#0B0E12;color:#8A93A0;padding:40px 0;font-size:14px;}
       <span class="wm">Dron<span style="color:var(--blue)">Way</span></span>
     </a>
     <nav class="nav-links" id="menu">
+      <a href="#uslugi">Услуги</a>
       <a href="#catalog">Каталог</a>
-      <a href="#docs">Сопровождение</a>
+      <a href="#docs">Этапы</a>
       <a href="#service">Сервис</a>
       <a href="#training">Обучение</a>
       <a href="#industries">Отрасли</a>
@@ -190,33 +203,67 @@ footer{background:#0B0E12;color:#8A93A0;padding:40px 0;font-size:14px;}
   </div>
 </section>
 
-<!-- ЧТО МЫ ДЕЛАЕМ -->
-<section class="sec">
+<!-- УСЛУГИ -->
+<section class="sec" id="uslugi">
   <div class="wrap">
-    <div class="eyebrow">Что мы делаем</div>
-    <h2>Три зоны ответственности под одной крышей</h2>
-    <div class="grid3">
-      <div class="card"><div class="n">ЖЕЛЕЗО</div><h3>Поставка</h3><p>Грузовые борта от 10 до 150 кг, комплектующие, ЗИП и подменный фонд</p></div>
-      <div class="card"><div class="n">ЛЕГАЛИЗАЦИЯ</div><h3>Сопровождение</h3><p>Учёт, регистрация, лётная годность, сертификат эксплуатанта и пилоты, всё под ключ</p></div>
-      <div class="card"><div class="n">РЕЗУЛЬТАТ</div><h3>Эксплуатация</h3><p>Дрон как сервис: доставка по подписке или за вылет, с ТО и сопровождением полётов</p></div>
+    <div class="eyebrow">Услуги</div>
+    <h2>Полный комплекс по дронам, не только продажа</h2>
+    <p class="lead">Клиент получает не коробку, а готовое легальное решение под ключ. Берём на себя весь цикл</p>
+    <div class="grid4">
+      <div class="card"><div class="n">01</div><h3 style="font-size:19px;">Разные поставщики</h3><p>Работаем с несколькими производителями дронов, а не с одним, и подбираем борт под задачу</p></div>
+      <div class="card"><div class="n">02</div><h3 style="font-size:19px;">Продажа и запчасти</h3><p>Грузовые борта под разные нагрузки, плюс ЗИП и запчасти</p></div>
+      <div class="card"><div class="n">03</div><h3 style="font-size:19px;">Документы и разрешения</h3><p>Готовим всю документацию и получаем разрешения на полёты</p></div>
+      <div class="card"><div class="n">04</div><h3 style="font-size:19px;">Логистика</h3><p>Доставка бортов и организация полётной логистики на объект</p></div>
+      <div class="card"><div class="n">05</div><h3 style="font-size:19px;">Эксплуатация и сервис</h3><p>Эксплуатация под ключ, в том числе дрон как сервис, с ТО и SLA</p></div>
+      <div class="card"><div class="n">06</div><h3 style="font-size:19px;">Обучение пилотов</h3><p>Подготовка внешних пилотов через аккредитованный центр</p></div>
+      <div class="card"><div class="n">07</div><h3 style="font-size:19px;">Страхование</h3><p>Оформляем страховку и работаем со страховщиками под ваши полёты</p></div>
+      <div class="card"><div class="n">08</div><h3 style="font-size:19px;">Партнёрам</h3><p>Реферал, работа в регионе с делением выручки, покупка бортов на спеццене</p></div>
     </div>
   </div>
 </section>
 
-<!-- СОПРОВОЖДЕНИЕ / ПУТЬ -->
+<!-- ПУТЬ / ЭТАПЫ -->
 <section class="sec dark" id="docs">
   <div class="wrap">
-    <div class="eyebrow">Сопровождение и документы</div>
-    <h2>От «хочу дрон» до «он легально возит»</h2>
-    <p class="lead">Грузовой борт свыше 30 кг это путь через несколько госорганов. Мы проходим его за клиента, по шагам</p>
-    <div class="steps">
-      <div class="st"><div class="k">ШАГ 0</div><div class="t">Подбор и проверка</div><p>Борт под задачу, аудит региона и маршрута, выбор модели работы, расчёт экономики</p></div>
-      <div class="st"><div class="k">ШАГ 1</div><div class="t">Документы на борт</div><p>Учёт для лёгких или госрегистрация для тяжёлых. Паспорт борта даёт завод</p></div>
-      <div class="st"><div class="k">ШАГ 2</div><div class="t">Лётная годность</div><p>Сертификат через акт оценки. На территории ЭПР достаточно самого акта</p></div>
-      <div class="st"><div class="k">ШАГ 3</div><div class="t">Право возить</div><p>Сертификат эксплуатанта, пилоты, страховка и планы полётов на каждый вылет</p></div>
-    </div>
-    <div class="incl">
-      <span>Постановка на учёт</span><span>Госрегистрация</span><span>Акт оценки и СЛГ</span><span>Сертификат эксплуатанта</span><span>Свидетельство внешнего пилота</span><span>Страхование</span><span>Планы полётов и ИВП</span><span>Согласование с регионом</span>
+    <div class="eyebrow">Как мы работаем</div>
+    <h2>Полный путь: от покупки борта до легальных полётов</h2>
+    <p class="lead">Это гораздо больше, чем продажа дрона. Каждый этап ниже мы закрываем за вас, чтобы борт реально летал и возил легально</p>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-line"></div><div class="tl-num">1</div><div class="tl-body">
+        <h3>Подбор и поставка борта</h3>
+        <p>Помогаем выбрать борт под задачу, маршрут и груз, поставляем технику, комплектующие и ЗИП</p>
+        <div class="tl-chips"><span>Подбор модели</span><span>Поставка</span><span>Запчасти и ЗИП</span></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-line"></div><div class="tl-num">2</div><div class="tl-body">
+        <h3>Логистика и доставка</h3>
+        <p>Доставляем борт на ваш объект и страхуем перевозку, риск повреждения в пути закрыт</p>
+        <div class="tl-chips"><span>Доставка</span><span>Грузовая страховка</span><span>Приёмка</span></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-line"></div><div class="tl-num">3</div><div class="tl-body">
+        <h3>Документы на борт</h3>
+        <p>Ставим борт на учёт или проходим госрегистрацию, в зависимости от взлётной массы</p>
+        <div class="tl-chips"><span>Учёт до 30 кг</span><span>Госрегистрация свыше 30 кг</span></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-line"></div><div class="tl-num">4</div><div class="tl-body">
+        <h3>Лётная годность</h3>
+        <p>Для тяжёлых бортов оформляем акт оценки и сертификат лётной годности, на территории ЭПР путь короче</p>
+        <div class="tl-chips"><span>Акт оценки</span><span>Сертификат лётной годности</span><span>Поддержание годности</span></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-line"></div><div class="tl-num">5</div><div class="tl-body">
+        <h3>Право эксплуатировать</h3>
+        <p>Закрываем статус эксплуатанта, пилотов и страхование ответственности, или даём это вам как сервис</p>
+        <div class="tl-chips"><span>Сертификат эксплуатанта</span><span>Внешние пилоты</span><span>Страховка ответственности</span></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-line"></div><div class="tl-num">6</div><div class="tl-body">
+        <h3>Разрешение на полёты</h3>
+        <p>Готовим планы полётов и разрешения на воздушное пространство, согласуем с регионом</p>
+        <div class="tl-chips"><span>План полёта</span><span>Разрешение на ИВП</span><span>Согласование с регионом</span></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-line"></div><div class="tl-num">7</div><div class="tl-body">
+        <h3>Эксплуатация и сервис</h3>
+        <p>Полёты, ТО, подменный фонд и дрон как сервис, борт остаётся в воздухе и приносит результат</p>
+        <div class="tl-chips"><span>ТО и ремонт</span><span>Подменный фонд</span><span>Дрон как сервис</span></div>
+      </div></div>
     </div>
   </div>
 </section>
@@ -245,8 +292,8 @@ footer{background:#0B0E12;color:#8A93A0;padding:40px 0;font-size:14px;}
 <section class="sec" id="catalog" style="background:var(--white);">
   <div class="wrap">
     <div class="eyebrow">Каталог</div>
-    <h2>Линейка грузовых дронов 10–150 кг</h2>
-    <p class="lead">Порог 30 кг делит линейку на два пути: лёгкий, с минимумом документов, и тяжёлый, с полным циклом легализации</p>
+    <h2>Линейка грузовых дронов 10-150 кг</h2>
+    <p class="lead">Мы работаем с разными поставщиками и подбираем борт под задачу, а не привязаны к одному производителю. Порог взлётной массы 30 кг делит технику на два пути: лёгкий, с минимумом документов, и тяжёлый, с полным циклом легализации</p>
     <div class="pathnote">до 30 кг · лёгкий путь</div>
     <div class="cat-grid" id="cat-light"></div>
     <div class="pathnote">свыше 30 кг · тяжёлый путь</div>
@@ -330,12 +377,14 @@ footer{background:#0B0E12;color:#8A93A0;padding:40px 0;font-size:14px;}
         <div style="font-size:13px;color:#7D8896;font-family:'Montserrat';font-weight:700;letter-spacing:2px;margin-top:36px;">САЙТ</div>
         <div class="site-big">dronway<span style="color:var(--blue)">.com</span></div>
       </div>
-      <form onsubmit="return false;">
-        <div class="field"><label>Имя</label><input type="text" placeholder="Как к вам обращаться"></div>
-        <div class="field"><label>Компания</label><input type="text" placeholder="Название компании"></div>
-        <div class="field"><label>Телефон или почта</label><input type="text" placeholder="Контакт для связи"></div>
-        <div class="field"><label>Задача</label><textarea rows="3" placeholder="Груз, маршрут, регион"></textarea></div>
-        <button class="btn" type="submit" style="width:100%;padding:14px;">Отправить заявку</button>
+      <form id="leadForm">
+        <div class="field"><label>Имя</label><input id="f-name" type="text" placeholder="Как к вам обращаться"></div>
+        <div class="field"><label>Компания</label><input id="f-company" type="text" placeholder="Название компании"></div>
+        <div class="field"><label>Телефон или почта</label><input id="f-contact" type="text" placeholder="Контакт для связи"></div>
+        <div class="field"><label>Задача</label><textarea id="f-task" rows="3" placeholder="Груз, маршрут, регион"></textarea></div>
+        <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+        <button class="btn" id="f-submit" type="submit" style="width:100%;padding:14px;">Отправить заявку</button>
+        <div id="f-msg" style="margin-top:13px;font-size:14.5px;display:none;"></div>
       </form>
     </div>
   </div>
@@ -381,6 +430,30 @@ function card(d){
 }
 document.getElementById('cat-light').innerHTML=drones.filter(function(d){return d.cls==='lt';}).map(card).join('');
 document.getElementById('cat-heavy').innerHTML=drones.filter(function(d){return d.cls==='hvy';}).map(card).join('');
+
+// lead form -> /api/lead -> Telegram
+var lf=document.getElementById('leadForm');
+if(lf){lf.addEventListener('submit',function(e){
+  e.preventDefault();
+  var btn=document.getElementById('f-submit'),msg=document.getElementById('f-msg'),old=btn.textContent;
+  var payload={
+    name:document.getElementById('f-name').value.trim(),
+    company:document.getElementById('f-company').value.trim(),
+    contact:document.getElementById('f-contact').value.trim(),
+    task:document.getElementById('f-task').value.trim(),
+    website:document.getElementById('f-website').value
+  };
+  function show(t,c){msg.style.display='block';msg.style.color=c;msg.textContent=t;}
+  if(!payload.name&&!payload.contact){show('Заполните имя и контакт','#ffb4b4');return;}
+  btn.disabled=true;btn.textContent='Отправляем…';
+  fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d&&d.ok){lf.reset();show('Спасибо, заявка отправлена. Мы свяжемся с вами','#7CE3A1');btn.textContent='Отправлено';}
+      else{show('Не удалось отправить, попробуйте ещё раз','#ffb4b4');btn.disabled=false;btn.textContent=old;}
+    })
+    .catch(function(){show('Сеть недоступна, попробуйте позже','#ffb4b4');btn.disabled=false;btn.textContent=old;});
+});}
 </script>
 </body>
 </html>
