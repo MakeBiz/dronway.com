@@ -1,0 +1,162 @@
+---
+// DroneLineup.astro — три борта линейки на главной
+---
+
+<section class="lineup" aria-label="Линейка бортов">
+
+  <!-- ЧК-6 -->
+  <div class="lp lp-ck6">
+    <img src="/images/ck6.jpg" alt="DW-30, лёгкий гексакоптер" loading="lazy" />
+    <div class="lp-grad lp-grad-left"></div>
+    <div class="lp-content lp-left">
+      <span class="lp-badge">DW-30</span>
+      <h3 class="lp-title">До 30 кг<br>Лёгкий класс</h3>
+      <p class="lp-desc">Манёвренный гексакоптер для ближней и городской логистики. Учёт без госрегистрации</p>
+      <div class="lp-specs">
+        <span>30 кг нагрузка</span>
+        <span>78 мин полёт</span>
+        <span>Учёт, без СЛГ</span>
+      </div>
+      <a href="/catalog/dw-30" class="lp-link">Подробнее →</a>
+    </div>
+  </div>
+
+  <!-- ЧК-9, видео -->
+  <div class="lp lp-ck9">
+    <video autoplay muted loop playsinline poster="/images/ck9.jpg">
+      <source src="/video/ck9.mp4" type="video/mp4" />
+    </video>
+    <div class="lp-grad lp-grad-bottom"></div>
+    <div class="lp-content lp-bottom">
+      <div class="lp-stats">
+        <div class="lp-stat"><span class="lp-num">40</span><span class="lp-unit">кг</span></div>
+        <div class="lp-stat-sep"></div>
+        <div class="lp-stat"><span class="lp-num">21</span><span class="lp-unit">км</span></div>
+        <div class="lp-stat-sep"></div>
+        <div class="lp-stat"><span class="lp-num">78</span><span class="lp-unit">мин</span></div>
+      </div>
+      <span class="lp-badge">DW-40</span>
+      <h3 class="lp-title">40 кг. В полёте.</h3>
+      <p class="lp-desc">Основной рабочий борт: доставка туда, куда машина не проедет</p>
+      <a href="/catalog/dw-40" class="lp-link">Подробнее →</a>
+    </div>
+  </div>
+
+  <!-- ЧК-15 -->
+  <div class="lp lp-ck15">
+    <img src="/images/ck15.jpg" alt="DW-150, тяжёлый квадрокоптер" loading="lazy" />
+    <div class="lp-grad lp-grad-right"></div>
+    <div class="lp-content lp-right">
+      <span class="lp-badge">DW-150</span>
+      <h3 class="lp-title">До 150 кг<br>Тяжёлый класс</h3>
+      <p class="lp-desc">Промышленная логистика и удалённые объекты. Госрегистрация, СЛГ, эксплуатант</p>
+      <div class="lp-specs">
+        <span>150 кг нагрузка</span>
+        <span>Тяжёлый класс</span>
+        <span>Госрегистрация</span>
+      </div>
+      <a href="/catalog/dw-150" class="lp-link">Подробнее →</a>
+    </div>
+  </div>
+
+</section>
+
+<style>
+.lineup {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 600px;
+  overflow: hidden;
+}
+
+/* базовая панель */
+.lp {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.4s ease;
+}
+.lp img,
+.lp video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lp-ck6 img  { filter: brightness(.72) contrast(1.12) saturate(.7);  object-position: center 60%; }
+.lp-ck9 video { filter: brightness(.68) contrast(1.18) saturate(.6);  object-position: center 38%; }
+.lp-ck15 img { filter: brightness(.78) contrast(1.05) saturate(.55); object-position: center 50%; }
+
+/* градиентные оверлеи */
+.lp-grad { position: absolute; inset: 0; pointer-events: none; }
+.lp-grad-left  { background: linear-gradient(to right,  rgba(21,24,28,.94) 0%, rgba(21,24,28,.6) 50%, rgba(21,24,28,.05) 100%); }
+.lp-grad-bottom{ background: linear-gradient(to top,    rgba(21,24,28,.97) 0%, rgba(21,24,28,.55) 45%, rgba(21,24,28,.04) 100%); }
+.lp-grad-right { background: linear-gradient(to left,   rgba(21,24,28,.94) 0%, rgba(21,24,28,.6) 50%, rgba(21,24,28,.05) 100%); }
+
+/* текстовый контент */
+.lp-content { position: absolute; z-index: 10; padding: 36px 32px; display: flex; flex-direction: column; }
+.lp-left   { top: 0; left: 0; bottom: 0; width: 75%; justify-content: flex-end; }
+.lp-bottom { bottom: 0; left: 0; right: 0; }
+.lp-right  { top: 0; right: 0; bottom: 0; width: 75%; justify-content: flex-end; align-items: flex-end; text-align: right; }
+
+.lp-badge {
+  display: inline-block;
+  background: rgba(30,99,233,.22);
+  border: 1px solid rgba(30,99,233,.5);
+  color: #6BA0FF;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  padding: 4px 11px; border-radius: 2px;
+  margin-bottom: 12px; width: fit-content;
+}
+.lp-right .lp-badge { margin-left: auto; }
+
+.lp-title {
+  color: #fff; font-family: 'Montserrat', sans-serif;
+  font-size: 26px; font-weight: 800; line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.lp-desc {
+  color: rgba(255,255,255,.65); font-size: 13px; line-height: 1.5;
+  max-width: 280px; margin-bottom: 16px;
+}
+.lp-right .lp-desc { margin-left: auto; }
+
+.lp-specs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+.lp-right .lp-specs { justify-content: flex-end; }
+.lp-specs span {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.7); font-size: 11px;
+  padding: 5px 12px; border-radius: 2px;
+}
+
+.lp-link {
+  color: #6BA0FF; font-size: 13px; font-weight: 600;
+  letter-spacing: .3px; transition: color .15s;
+}
+.lp-link:hover { color: #fff; }
+
+/* большие цифры ЧК-9 */
+.lp-stats {
+  display: flex; align-items: flex-end; gap: 16px;
+  margin-bottom: 22px;
+}
+.lp-stat { display: flex; align-items: baseline; gap: 4px; }
+.lp-num  { color: #fff; font-family: 'Montserrat', sans-serif; font-size: 48px; font-weight: 800; line-height: 1; }
+.lp-unit { color: rgba(255,255,255,.45); font-size: 13px; font-weight: 600; letter-spacing: 1px; padding-bottom: 6px; }
+.lp-stat-sep { width: 1px; height: 40px; background: rgba(255,255,255,.2); }
+
+/* responsive */
+@media (max-width: 860px) {
+  .lineup { grid-template-columns: 1fr; height: auto; }
+  .lp { height: 420px; }
+  .lp-right { right: unset; left: 0; align-items: flex-start; text-align: left; }
+  .lp-right .lp-badge { margin-left: 0; }
+  .lp-right .lp-desc  { margin-left: 0; }
+  .lp-right .lp-specs { justify-content: flex-start; }
+  .lp-grad-right { background: linear-gradient(to right, rgba(21,24,28,.94) 0%, rgba(21,24,28,.6) 50%, rgba(21,24,28,.05) 100%); }
+}
+</style>

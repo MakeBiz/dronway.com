@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
+import DroneLineup from '../components/DroneLineup.astro';
+import SchemesSection from '../components/SchemesSection.astro';
 import { services } from '../data/services.js';
-import { types } from '../data/types.js';
 import { applications } from '../data/applications.js';
 import { drones } from '../data/drones.js';
 const why = [
@@ -18,9 +19,16 @@ const why = [
 const cargo = drones.slice(0,4);
 ---
 <Base title="" description="DronWay, дроны под ключ: подбор у разных поставщиков, поставка, документы, эксплуатация, страхование и партнёрство" active="/">
-  <section class="hero">
-    <div class="glow"></div>
-    <div class="wrap">
+
+  <!-- HERO с видео-фоном ЧК-9 -->
+  <section class="hero hero-video">
+    <div class="hero-bg">
+      <video autoplay muted loop playsinline poster="/images/ck9.jpg" class="hero-vid">
+        <source src="/video/ck9.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="wrap hero-wrap">
       <div class="eyebrow" style="color:#6BA0FF;">Дроны под ключ</div>
       <h1>От завода до легального полёта, всё в одних руках</h1>
       <p>DronWay это единый интегратор по дронам. Подбираем технику у разных производителей, поставляем, оформляем документы, держим эксплуатацию, страхуем и развиваем партнёров. Вы получаете не коробку, а готовое решение под задачу.</p>
@@ -32,7 +40,10 @@ const cargo = drones.slice(0,4);
     </div>
   </section>
 
-  <!-- Каталог highlight -->
+  <!-- ЛИНЕЙКА БОРТОВ — три панели с фото -->
+  <DroneLineup />
+
+  <!-- КАТАЛОГ -->
   <section class="sec white">
     <div class="wrap">
       <div class="eyebrow">Каталог</div>
@@ -52,7 +63,10 @@ const cargo = drones.slice(0,4);
     </div>
   </section>
 
-  <!-- Услуги -->
+  <!-- СХЕМЫ: С нами / Без нас -->
+  <SchemesSection />
+
+  <!-- УСЛУГИ -->
   <section class="sec">
     <div class="wrap">
       <div class="eyebrow">Услуги</div>
@@ -69,25 +83,7 @@ const cargo = drones.slice(0,4);
     </div>
   </section>
 
-  <!-- Виды дронов -->
-  <section class="sec white">
-    <div class="wrap">
-      <div class="eyebrow">Виды дронов</div>
-      <h2 class="h">Подбираем тип борта под задачу, а не наоборот</h2>
-      <p class="lead">Мы мультивендор и поставляем технику разных типов. Вот основные классы, которые закрываем</p>
-      <div class="grid g4">
-        {types.map((t) => (
-          <a class="card" href={`/types/${t.slug}`}>
-            <div class="n">{t.badge.toUpperCase()}</div>
-            <h3 style="font-size:18px;">{t.name}</h3>
-            <p>{t.short}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Применение -->
+  <!-- ПРИМЕНЕНИЕ -->
   <section class="sec dark">
     <div class="wrap">
       <div class="eyebrow" style="color:#6BA0FF;">Применение</div>
@@ -104,7 +100,7 @@ const cargo = drones.slice(0,4);
     </div>
   </section>
 
-  <!-- Почему мы -->
+  <!-- ПОЧЕМУ МЫ -->
   <section class="sec white">
     <div class="wrap">
       <div class="eyebrow">Почему DronWay</div>
@@ -118,4 +114,5 @@ const cargo = drones.slice(0,4);
       <div style="margin-top:46px;"><CtaBand /></div>
     </div>
   </section>
+
 </Base>
