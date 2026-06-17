@@ -14,8 +14,9 @@ import PageHead from '../components/PageHead.astro';
           <h2 class="h" style="font-size:28px;">Ответим и предложим решение</h2>
           <form class="form" id="leadForm">
             <input type="text" name="name" placeholder="Как к вам обращаться" required />
+            <input type="text" name="company" placeholder="Компания" />
             <input type="text" name="contact" placeholder="Телефон или мессенджер для связи" required />
-            <textarea name="message" rows="4" placeholder="Коротко о задаче: что возить или обследовать, объект, частота"></textarea>
+            <textarea name="task" rows="5" placeholder="Коротко о задаче: что нужно доставлять или обследовать, объект, расстояние, частота рейсов"></textarea>
             <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" />
             <button type="submit" class="btn lg" id="leadBtn">Отправить заявку</button>
             <div class="note" id="leadNote">Нажимая кнопку, вы соглашаетесь на обработку контактов для ответа на заявку</div>
