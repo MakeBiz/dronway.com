@@ -1,5 +1,6 @@
 // Vercel serverless function: принимает заявку с формы и шлёт её в Telegram.
-// Токен и chat id берутся из переменных окружения, в коде их нет.
+// Токен и chat id берутся из переменных окружения Vercel; если их нет -
+// используется запасное значение, зашитое в коде (см. ниже).
 // Путь файла в репозитории: api/lead.js
 
 export default async function handler(req, res) {
@@ -27,8 +28,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: 'Пустая форма' });
     }
 
-    const token = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID;
+    // Приоритет - переменные окружения Vercel; запасной вариант зашит ниже,
+    // чтобы форма работала сразу. Токен лучше держать в env и не публиковать код.
+    const token = process.env.TELEGRAM_BOT_TOKEN || '8954530122:AAGQvjSHIZcAfeQI7OpTzfUu9rVXn1oIAVM';
+    const chatId = process.env.TELEGRAM_CHAT_ID || '-5585775434';
     if (!token || !chatId) {
       return res.status(500).json({ ok: false, error: 'Не заданы TELEGRAM_BOT_TOKEN или TELEGRAM_CHAT_ID' });
     }

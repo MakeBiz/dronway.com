@@ -82,18 +82,24 @@ const ss = (s) => `/drones/${s}-400.webp 400w, /drones/${s}-800.webp 800w, /dron
         <a class="btn-s" href="/catalog">Смотреть линейку →</a>
       </div>
       <div class="stats hst">
-        <div class="stat"><b class="sg">150 кг</b><span>макс. нагрузка</span></div>
-        <div class="stat"><b class="sg">68 км</b><span>без груза</span></div>
-        <div class="stat"><b class="sg">5</b><span>ГНСС систем</span></div>
+        <div class="stat"><b class="sg" data-to="150" data-suf=" кг">0</b><span>макс. нагрузка</span></div>
+        <div class="stat"><b class="sg" data-to="68" data-suf=" км">0</b><span>без груза</span></div>
+        <div class="stat"><b class="sg" data-to="5" data-suf="">0</b><span>ГНСС систем</span></div>
       </div>
     </div>
     <div class="hero-photo">
-      <div class="ring r1"></div>
-      <div class="ring r2"></div>
-      <div class="glow"></div>
-      <img class="himg" src="/drones/heavy-800.webp" srcset={ss('heavy')}
-        sizes="(max-width:860px) 92vw, 600px" style="aspect-ratio:1254/757"
-        fetchpriority="high" alt="Тяжёлый грузовой дрон DronWay DW-150" />
+      <div class="bg-layers">
+        <div class="sweep"></div>
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="glow"></div>
+      </div>
+      <div class="himg-wrap">
+        <div class="hground"></div>
+        <img class="himg" src="/drones/heavy-800.webp" srcset={ss('heavy')}
+          sizes="(max-width:860px) 92vw, 600px" style="aspect-ratio:1254/757"
+          fetchpriority="high" alt="Тяжёлый грузовой дрон DronWay DW-150" />
+      </div>
       <div class="hero-cap hst"><span>DW-150 · 150 КГ · ТЯЖЁЛЫЙ КЛАСС</span></div>
     </div>
   </section>
@@ -257,6 +263,20 @@ const ss = (s) => `/drones/${s}-400.webp 400w, /drones/${s}-800.webp 800w, /dron
   .hero-cap{position:absolute;bottom:32px;text-align:center}
   .hero-cap span{font-size:13px;font-weight:700;color:rgba(14,63,168,.5);letter-spacing:1.5px}
 
+  /* depth + motion (first-concept feel) */
+  .bg-layers{position:absolute;inset:0;transition:transform .3s ease-out}
+  .himg-wrap{position:relative;z-index:2;width:84%;max-width:600px;display:flex;align-items:center;justify-content:center;transition:transform .3s ease-out}
+  .hero-photo .himg{width:100%;max-width:100%;animation:hfloat 7s ease-in-out infinite}
+  .bg-layers .sweep{position:absolute;width:430px;height:430px;border-radius:50%;top:48%;left:50%;transform:translate(-50%,-50%);background:conic-gradient(from 0deg,rgba(30,99,233,.10),rgba(30,99,233,0) 30%);animation:hsweep 11s linear infinite}
+  .ring.r2{border-style:dashed;animation:hspin 55s linear infinite}
+  .himg-wrap .hground{position:absolute;bottom:-4%;left:50%;width:62%;height:26px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(20,40,80,.22),transparent 70%);filter:blur(8px);animation:hgsh 7s ease-in-out infinite;z-index:0}
+  .stage-img{animation:hfloat 8.5s ease-in-out infinite}
+  @keyframes hfloat{0%,100%{transform:translateY(-8px)}50%{transform:translateY(8px)}}
+  @keyframes hgsh{0%,100%{transform:translateX(-50%) scaleX(.82);opacity:.5}50%{transform:translateX(-50%) scaleX(1);opacity:.8}}
+  @keyframes hspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  @keyframes hsweep{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.hero-photo .himg,.stage-img,.bg-layers .sweep,.ring.r2,.himg-wrap .hground{animation:none}}
+
   /* scroll sections */
   .sec{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;border-top:1px solid var(--line)}
   .sec.dark{background:#0B0F17;border-top-color:#1a2230}
@@ -359,3 +379,30 @@ const ss = (s) => `/drones/${s}-400.webp 400w, /drones/${s}-800.webp 800w, /dron
     .hero-types{grid-template-columns:1fr;max-width:340px}
   }
 </style>
+
+<script>
+  (function () {
+    var ease = function (p) { return 1 - Math.pow(1 - p, 3); };
+    document.querySelectorAll('.stats b[data-to]').forEach(function (el) {
+      var to = parseFloat(el.getAttribute('data-to')) || 0;
+      var suf = el.getAttribute('data-suf') || '';
+      var dur = 1100, s = null;
+      function step(t) { if (!s) s = t; var p = Math.min((t - s) / dur, 1);
+        el.textContent = Math.round(to * ease(p)) + suf; if (p < 1) requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    });
+    var hp = document.querySelector('.hero-photo');
+    if (hp && window.matchMedia && window.matchMedia('(pointer:fine)').matches) {
+      var bg = hp.querySelector('.bg-layers'), dr = hp.querySelector('.himg-wrap');
+      hp.addEventListener('mousemove', function (e) {
+        var r = hp.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        if (bg) bg.style.transform = 'translate(' + (x * -12) + 'px,' + (y * -10) + 'px)';
+        if (dr) dr.style.transform = 'translate(' + (x * 18) + 'px,' + (y * 13) + 'px)';
+      });
+      hp.addEventListener('mouseleave', function () {
+        if (bg) bg.style.transform = ''; if (dr) dr.style.transform = '';
+      });
+    }
+  })();
+</script>
