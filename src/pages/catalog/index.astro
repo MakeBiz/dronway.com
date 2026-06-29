@@ -2,14 +2,16 @@
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { drones, droneOptionsGlobal } from '../../data/drones.js';
-import { types } from '../../data/types.js';
+import { drones, optionsPriced } from '../../data/drones.js';
 const light = drones.filter((d) => d.klass === 'light');
 const heavy = drones.filter((d) => d.klass === 'heavy');
+// миниатюра по схеме борта: квадро -> фото квадрокоптера, иначе -> фото гексакоптера
+const thumb = (frame) => (frame && frame.includes('Квадро')) ? 'heavy' : 'hexa-1';
+const tss = (s) => `/drones/${s}-400.webp 400w, /drones/${s}-800.webp 800w`;
 ---
 <Base title="Каталог" description="Каталог дронов DronWay: грузовая линейка DW 10-150 кг и виды дронов под разные задачи" active="/catalog">
-  <PageHead eyebrow="Каталог" title="Грузовые дроны и виды техники"
-    lead="Сначала наша грузовая линейка DW от 10 до 150 кг, ниже остальные типы дронов, которые подбираем у разных поставщиков под вашу задачу"
+  <PageHead eyebrow="Каталог" title="Грузовые дроны DW"
+    lead="Грузовая линейка от 10 до 150 кг под доставку и снабжение. Подбираем модель и комплектацию под груз, маршрут и условия"
     crumbs={[{label:'Каталог'}]} />
 
   <section class="sec white">
@@ -19,55 +21,86 @@ const heavy = drones.filter((d) => d.klass === 'heavy');
       <p class="lead">Порог взлётной массы 30 кг делит технику на два пути: лёгкий, с минимумом документов, и тяжёлый, с полным циклом легализации, который мы ведём за вас</p>
 
       <div class="pathnote">до 30 кг · лёгкий путь</div>
-      <div class="grid g3">
+      <div class="grid g2">
         {light.map((d) => (
-          <a class="card" href={`/catalog/${d.slug}`}>
-            <div class="n">{d.frame.toUpperCase()}</div>
-            <h3>{d.name}</h3>
-            <p>{d.tagline}</p>
-            <p style="margin-top:10px;color:var(--ink);font-family:'Montserrat';font-weight:700;">{d.payload} кг · {d.flight} мин</p>
-            <span class="more">Характеристики →</span>
+          <a class="card card-photo" href={`/catalog/${d.slug}`}>
+            <div class="card-body">
+              <div class="n">{d.frame.toUpperCase()}</div>
+              <h3>{d.name}</h3>
+              <p>{d.tagline}</p>
+              <p class="card-spec">{d.payload} кг · {d.flight} мин</p>
+              <span class="more">Характеристики →</span>
+            </div>
+            <div class="card-thumb"><img src={`/drones/${thumb(d.frame)}-400.webp`} srcset={tss(thumb(d.frame))} sizes="200px" alt={`Грузовой дрон ${d.name}`} loading="lazy" decoding="async" /></div>
           </a>
         ))}
       </div>
 
       <div class="pathnote">свыше 30 кг · тяжёлый путь</div>
-      <div class="grid g4">
+      <div class="grid g2">
         {heavy.map((d) => (
-          <a class="card" href={`/catalog/${d.slug}`}>
-            <div class="n">{d.frame.toUpperCase()}</div>
-            <h3>{d.name}</h3>
-            <p>{d.tagline}</p>
-            <p style="margin-top:10px;color:var(--ink);font-family:'Montserrat';font-weight:700;">{d.payload} кг · {d.flight} мин</p>
-            <span class="more">Характеристики →</span>
+          <a class="card card-photo" href={`/catalog/${d.slug}`}>
+            <div class="card-body">
+              <div class="n">{d.frame.toUpperCase()}</div>
+              <h3>{d.name}</h3>
+              <p>{d.tagline}</p>
+              <p class="card-spec">{d.payload} кг · {d.flight} мин</p>
+              <span class="more">Характеристики →</span>
+            </div>
+            <div class="card-thumb"><img src={`/drones/${thumb(d.frame)}-400.webp`} srcset={tss(thumb(d.frame))} sizes="200px" alt={`Грузовой дрон ${d.name}`} loading="lazy" decoding="async" /></div>
           </a>
         ))}
       </div>
 
-      <div style="margin-top:42px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:28px 30px;">
-        <h3 style="font-weight:800;font-size:20px;">Опции и допоборудование</h3>
-        <div class="chips" style="margin-top:16px;">
-          {droneOptionsGlobal.map((o) => (<span>{o}</span>))}
-        </div>
+      <div class="opts-wrap">
+        <div class="eyebrow" style="margin-top:8px;">Дополнительное оборудование</div>
+        <h3 class="opts-h">Опции сверх базовой комплектации</h3>
+        <p class="opts-note">Базовая комплектация входит в стоимость борта. Ниже - опции за доплату, цена указана за единицу.</p>
+        {optionsPriced.map((g) => (
+          <div class="opt-group">
+            <div class="opt-gname">{g.group}</div>
+            {g.items.map((it) => (
+              <div class="opt-row"><span class="opt-name">{it.name}</span><span class="opt-price">{it.price.toLocaleString('ru-RU')} ₽</span></div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <section class="sec">
     <div class="wrap">
-      <div class="eyebrow">Виды дронов</div>
-      <h2 class="h">Не только грузовые, под задачу подберём любой тип</h2>
-      <p class="lead">Мы мультивендор. Если задача не про доставку, а про инспекцию, мониторинг или охрану, подбираем нужный тип борта у проверенных производителей</p>
-      <div class="grid g4">
-        {types.map((t) => (
-          <a class="card" href={`/types/${t.slug}`}>
-            <div class="n">{t.badge.toUpperCase()}</div>
-            <h3 style="font-size:18px;">{t.name}</h3>
-            <p>{t.short}</p>
-          </a>
-        ))}
-      </div>
-      <div style="margin-top:46px;"><CtaBand title="Не нашли нужный борт?" text="Опишите задачу, подберём тип, модель и сенсор под неё и посчитаем стоимость" /></div>
+      <CtaBand title="Не нашли нужный борт?" text="Опишите задачу, подберём модель и комплектацию под груз, маршрут и условия, посчитаем стоимость" />
     </div>
   </section>
 </Base>
+
+<style>
+  /* горизонтальная карточка модели: текст слева, фото справа */
+  .card-photo{display:flex;align-items:center;gap:22px;padding:22px 24px}
+  .card-body{flex:1;min-width:0}
+  .card-body .n{margin-bottom:2px}
+  .card-body h3{margin:8px 0 8px}
+  .card-spec{margin-top:10px;color:var(--ink);font-weight:700}
+  .card-thumb{flex-shrink:0;width:178px;height:132px;border-radius:8px;border:1px solid var(--line);overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(100% 100% at 50% 38%, #EEF4FB 0%, #DFEAF7 100%)}
+     .card-thumb img{width:86%;max-width:162px;height:auto;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(20,40,80,.14))}
+  @media(max-width:560px){
+    .card-photo{flex-direction:column;align-items:stretch;gap:16px}
+    .card-thumb{width:100%;height:150px;order:-1}
+  }
+</style>
+
+<style>
+  .opts-wrap{margin-top:44px;background:var(--w);border:1px solid var(--line);border-radius:16px;padding:30px 32px}
+  .opts-h{font-family:'Space Grotesk';font-weight:700;font-size:22px;margin:10px 0 6px}
+  .opts-note{color:var(--mu);font-size:14px;margin-bottom:14px;max-width:660px;line-height:1.6}
+  .opt-group{margin-top:18px}
+  .opt-gname{font-family:'Space Grotesk';font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bl);margin-bottom:4px}
+  .opt-row{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:baseline}
+  .opt-group .opt-row:last-child{border-bottom:none}
+  .opt-name{color:var(--ink);max-width:78%}
+  .opt-price{font-family:'Space Grotesk';font-weight:700;color:var(--bl);white-space:nowrap}
+  @media(max-width:560px){.opt-name{max-width:62%}}
+</style>

@@ -1,9 +1,14 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site.js';
-const { title, description = 'DronWay, дроны под ключ: подбор, поставка, документы, эксплуатация, страхование и партнёрство', active = '' } = Astro.props;
-const fullTitle = title ? `${title} · DronWay` : 'DronWay, дроны под ключ';
-const drone = `<svg width="40" height="40" viewBox="0 0 120 120" aria-hidden="true"><g stroke-linecap="round" transform="translate(-25,-18)"><g stroke="#fff" stroke-width="7"><line x1="85" y1="70" x2="61" y2="46"/><line x1="85" y1="70" x2="109" y2="46"/><line x1="85" y1="70" x2="61" y2="94"/><line x1="85" y1="70" x2="109" y2="94"/></g><circle cx="61" cy="46" r="13" fill="none" stroke="#fff" stroke-width="4"/><circle cx="109" cy="46" r="13" fill="none" stroke="#1E63E9" stroke-width="4"/><circle cx="61" cy="94" r="13" fill="none" stroke="#fff" stroke-width="4"/><circle cx="109" cy="94" r="13" fill="none" stroke="#fff" stroke-width="4"/><rect x="73" y="58" width="24" height="24" rx="7" fill="#fff"/></g></svg>`;
+const { title, description = 'DronWay - грузовые беспилотники под ключ: подбор, поставка, документы, эксплуатация, страхование и партнёрство', active = '' } = Astro.props;
+const fullTitle = title ? `${title} · DronWay` : 'DronWay - грузовые беспилотники под ключ';
+const topNav = [
+  { label: 'Каталог', href: '/catalog' },
+  { label: 'Услуги', href: '/services' },
+  { label: 'Кейсы', href: '/cases' },
+  { label: 'Этапы', href: '/process' },
+];
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -15,56 +20,45 @@ const drone = `<svg width="40" height="40" viewBox="0 0 120 120" aria-hidden="tr
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header class="hd">
-    <div class="wrap bar">
-      <a class="logo" href="/" aria-label="DronWay">
-        <Fragment set:html={drone} />
-        <span class="nm">Dron<b>Way</b></span>
-      </a>
-      <nav class="nav" id="menu">
-        {site.nav.map((n) => (
-          <a href={n.href} class={active === n.href ? 'active' : ''}>{n.label}</a>
-        ))}
-        <a href="/contacts" class="btn">Получить расчёт</a>
-      </nav>
-      <div class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></div>
+  <nav id="nav" class="x-nav">
+    <a class="x-logo" href="/"><img src="/logo.svg" alt="DronWay" width="116" height="31" /></a>
+    <div class="x-nav-links">
+      {topNav.map((n) => (<a href={n.href} class={active === n.href ? 'active' : ''}>{n.label}</a>))}
+      <a href="/contacts" class="x-cta-m">Запросить расчёт</a>
     </div>
-  </header>
+    <a class="x-nav-cta" href="/contacts">Запросить расчёт</a>
+    <div class="x-burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
 
   <main>
     <slot />
   </main>
 
-  <footer class="ft">
-    <div class="wrap">
-      <div class="cols">
-        <div>
-          <a class="logo" href="/"><Fragment set:html={drone} /><span class="nm">Dron<b>Way</b></span></a>
-          <p style="color:#9AA3B0;font-size:14px;margin-top:14px;max-width:320px;">Единый интегратор по дронам: подбираем технику у разных поставщиков и берём на себя весь путь от завода до легальных полётов.</p>
-        </div>
-        <div>
-          <h4>Разделы</h4>
-          {site.footer.slice(0,5).map((f) => (<a href={f.href}>{f.label}</a>))}
-        </div>
-        <div>
-          <h4>Ещё</h4>
-          {site.footer.slice(5).map((f) => (<a href={f.href}>{f.label}</a>))}
-        </div>
-      </div>
-      <div class="bottom">
-        <span>DronWay · {site.domain}</span>
-        <span>Поставка · документы · эксплуатация · страхование · партнёрство</span>
-      </div>
-    </div>
+  <footer class="x-footer">
+    <img class="fl-logo" src="/logo.svg" alt="DronWay" width="100" height="27" />
+    <span class="fm">Россия, Ярославль - производство DRONAX - 2026</span>
+    <span class="fr"><a href="/contacts">{site.domain}</a></span>
   </footer>
+  <nav class="x-footnav">
+    {site.footer.map((f) => (<a href={f.href}>{f.label}</a>))}
+  </nav>
 
   <script>
-    const b = document.getElementById('burger');
-    const m = document.getElementById('menu');
-    if (b && m) b.addEventListener('click', () => m.classList.toggle('open'));
+    const nav = document.getElementById('nav');
+    if (nav) {
+      const onScroll = () => { nav.classList.toggle('scrolled', window.scrollY > 40); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+    const burger = document.getElementById('burger');
+    if (burger && nav) burger.addEventListener('click', () => nav.classList.toggle('open'));
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .stage-img').forEach((el) => io.observe(el));
   </script>
 </body>
 </html>

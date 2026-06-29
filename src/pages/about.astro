@@ -7,17 +7,60 @@ const points = [
   ['Что отличает','Мы независимы от одного производителя и берём единую ответственность за результат. Это и есть наша главная разница с рынком'],
   ['Как работаем','Прозрачно считаем экономику, честно рекомендуем технику, ведём документы и страхование, держим сервис'],
 ];
+const photos = [
+  ['field-30','до 30 кг','гексакоптер','Грузовой дрон DronWay до 30 кг в поле'],
+  ['field-40','40 кг','гексакоптер','Грузовой дрон DronWay 40 кг'],
+  ['field-150','до 150 кг','квадрокоптер','Тяжёлый грузовой дрон DronWay 150 кг'],
+];
+const fss = (s) => `/field/${s}-400.webp 400w, /field/${s}-800.webp 800w, /field/${s}-1200.webp 1200w`;
 ---
 <Base title="О нас" description="О компании DronWay: единый интегратор по дронам, от подбора и поставки до легальных полётов" active="">
   <PageHead eyebrow="О нас" title="Единый интегратор по дронам"
     lead="DronWay появился из простой мысли: рынок дронов разорван на куски, и клиенту приходится собирать решение из десятка подрядчиков. Мы делаем это за него"
     crumbs={[{label:'О нас'}]} />
+
   <section class="sec white">
     <div class="wrap">
       <div class="grid g3" style="margin-top:0;">
         {points.map(([t,d]) => (<div class="card"><h3 style="font-size:19px;">{t}</h3><p>{d}</p></div>))}
       </div>
+    </div>
+  </section>
+
+  <div class="specband">
+    <div class="wrap specband-inner">
+      <div class="sb-item"><span class="sb-num">150</span><span class="sb-unit">бортов</span><span class="sb-label">поставлено за прошлый год</span></div>
+      <div class="sb-div"></div>
+      <div class="sb-item"><span class="sb-num">10-150</span><span class="sb-unit">кг</span><span class="sb-label">диапазон полезной нагрузки</span></div>
+      <div class="sb-div"></div>
+      <div class="sb-item"><span class="sb-num sb-klass">Север и Сибирь</span><span class="sb-label">сырьевые и добывающие компании</span></div>
+    </div>
+  </div>
+
+  <section class="sec white">
+    <div class="wrap">
+      <div class="eyebrow">Борта в работе</div>
+      <h2 class="h">Реальные машины на реальных объектах</h2>
+      <p class="lead">Наши грузовые борта в полевых условиях - от лёгких гексакоптеров до тяжёлой платформы на 150 кг.</p>
+      <div class="grid g3 photo-grid">
+        {photos.map(([slug,kg,frame,alt]) => (
+          <figure class="ph-item">
+            <div class="ph"><img src={`/field/${slug}-800.webp`} srcset={fss(slug)} sizes="(max-width:760px) 90vw, 340px" alt={alt} loading="lazy" decoding="async" /></div>
+            <figcaption class="pcap"><b>{kg}</b> · {frame}</figcaption>
+          </figure>
+        ))}
+      </div>
       <div style="margin-top:46px;"><CtaBand /></div>
     </div>
   </section>
 </Base>
+
+<style>
+  .photo-grid{margin-top:34px}
+  .photo-grid .ph-item{margin:0}
+  .photo-grid .ph{aspect-ratio:4/3;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#eef2f7}
+  .photo-grid .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+  .photo-grid .ph-item:hover .ph img{transform:scale(1.03)}
+  .photo-grid .pcap{font-size:13px;color:var(--mu);margin-top:10px}
+  .photo-grid .pcap b{font-family:'Space Grotesk';color:var(--bl);font-weight:700}
+</style>

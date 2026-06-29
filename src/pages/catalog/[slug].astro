@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
-import { drones, platform } from '../../data/drones.js';
+import { drones, platform, baseKit } from '../../data/drones.js';
 
 export function getStaticPaths() {
   return drones.map((d) => ({ params: { slug: d.slug }, props: { d } }));
@@ -56,7 +56,7 @@ const others = drones.filter((x) => x.slug !== d.slug);
         </div>
       ) : (
         <div class="sb-item">
-          <span class="sb-num">—</span>
+          <span class="sb-num">-</span>
           <span class="sb-label">скорость уточняется</span>
         </div>
       )}
@@ -75,6 +75,16 @@ const others = drones.filter((x) => x.slug !== d.slug);
         <!-- Левая: описание и таблица дальности -->
         <div>
           <p class="mod-desc">{d.desc}</p>
+
+          {d.demo && (
+            <div class="demo-block">
+              <div class="eyebrow" style="margin-bottom:14px;">{d.demo.title}</div>
+              <div class="demo-video">
+                <video src={d.demo.src} poster={d.demo.poster} controls playsinline preload="metadata"></video>
+              </div>
+              <p class="table-note" style="margin-top:10px;">Реальная съёмка: борт несёт груз и выполняет сброс в точке.</p>
+            </div>
+          )}
 
           {d.delivery.length > 0 && (
             <div class="delivery-block">
@@ -97,7 +107,7 @@ const others = drones.filter((x) => x.slug !== d.slug);
                   ))}
                 </tbody>
               </table>
-              <p class="table-note">Дальность — расстояние до точки с возвратом на базу. При наличии зарядки на точке доставки плечо увеличивается согласно столбцу "Примечание"</p>
+              <p class="table-note">Дальность - расстояние до точки с возвратом на базу. При наличии зарядки на точке доставки плечо увеличивается согласно столбцу "Примечание"</p>
             </div>
           )}
 
@@ -110,6 +120,12 @@ const others = drones.filter((x) => x.slug !== d.slug);
           <div class="chips">
             {d.tasks.map((t) => (<span>{t}</span>))}
           </div>
+
+          <div class="eyebrow" style="margin-top:34px;margin-bottom:14px;">Базовая комплектация</div>
+          <ul class="flist">
+            {baseKit.map((b) => (<li>{b}</li>))}
+          </ul>
+          <p class="table-note">Указанное входит в стоимость борта. Опции (RTK, усиленная защита от спуфинга, оптика, доп. АКБ) - за доплату, прайс в каталоге.</p>
         </div>
 
         <!-- Правая: таблица технических характеристик -->
@@ -152,7 +168,6 @@ const others = drones.filter((x) => x.slug !== d.slug);
           </div>
 
           <a href="/contacts" class="btn lg" style="width:100%;">Запросить расчёт и КП</a>
-          <a href="/daas" class="btn lg ghost" style="margin-top:10px;width:100%;color:var(--ink);border-color:var(--line);">Взять как сервис</a>
         </div>
       </div>
     </div>
@@ -184,8 +199,8 @@ const others = drones.filter((x) => x.slug !== d.slug);
                 <td>{row.frame}</td>
                 <td class={row.slug === d.slug ? 'td-blue' : ''}>{row.payload} кг</td>
                 <td>{row.flight} мин</td>
-                <td>{row.range_max ? `${row.range_max} км` : '—'}</td>
-                <td>{row.speed_max ? `${row.speed_max} км/ч` : '—'}</td>
+                <td>{row.range_max ? `${row.range_max} км` : '-'}</td>
+                <td>{row.speed_max ? `${row.speed_max} км/ч` : '-'}</td>
                 <td>{row.klass === 'light' ? 'Лёгкий' : 'Тяжёлый'}</td>
                 <td>
                   {row.slug !== d.slug
@@ -216,6 +231,9 @@ const others = drones.filter((x) => x.slug !== d.slug);
 
 /* описание модели */
 .mod-desc { font-size: 16px; color: var(--muted); line-height: 1.65; margin-bottom: 30px; }
+.demo-block { margin: 4px 0 32px; }
+.demo-video { max-width: 320px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.demo-video video { width: 100%; display: block; }
 
 /* таблица дальности */
 .delivery-block { margin-bottom: 8px; }

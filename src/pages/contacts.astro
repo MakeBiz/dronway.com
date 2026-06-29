@@ -25,7 +25,11 @@ import PageHead from '../components/PageHead.astro';
         <div>
           <div class="spec" style="background:#1C2127;border-color:#2B313A;padding:24px;">
             <div class="eyebrow" style="color:#6BA0FF;">Прямой контакт</div>
-            <p style="color:#C2CAD6;font-size:15px;margin-top:12px;line-height:1.6;">Сайт: dronway.com<br/>Заявки попадают сразу в наш Telegram, отвечаем быстро</p>
+            <div class="contacts-list">
+              <a href="tel:+79317066885" class="crow"><span class="ck">Телефон</span><span class="cv">+7 931 706-68-85</span></a>
+              <a href="mailto:zlata@dronway.com" class="crow"><span class="ck">Почта</span><span class="cv">zlata@dronway.com</span></a>
+              <a href="https://t.me/dronway_leads_bot" target="_blank" rel="noopener" class="crow"><span class="ck">Telegram</span><span class="cv">@dronway_leads_bot →</span></a>
+            </div>
           </div>
           <div class="spec" style="background:#1C2127;border-color:#2B313A;padding:24px;margin-top:16px;">
             <div class="eyebrow" style="color:#6BA0FF;">Что будет дальше</div>
@@ -58,3 +62,12 @@ import PageHead from '../components/PageHead.astro';
     });
   </script>
 </Base>
+
+<style>
+  .contacts-list{margin-top:14px;display:flex;flex-direction:column}
+  .crow{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #2B313A;align-items:baseline}
+  .crow:first-child{border-top:none}
+  .crow .ck{color:#7E8794;font-size:13px}
+  .crow .cv{color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:15px;text-align:right}
+  .crow:hover .cv{color:#6BA0FF}
+</style>

@@ -1,118 +1,361 @@
 ---
-import Base from '../layouts/Base.astro';
-import CtaBand from '../components/CtaBand.astro';
-import DroneLineup from '../components/DroneLineup.astro';
-import SchemesSection from '../components/SchemesSection.astro';
-import { services } from '../data/services.js';
-import { applications } from '../data/applications.js';
-import { drones } from '../data/drones.js';
-const why = [
-  ['01','Мультивендор','Не привязаны к одному производителю, берём лучший борт под вашу задачу'],
-  ['02','Весь путь под ключ','От подбора и поставки до легальных полётов, всё в одних руках'],
-  ['03','Единая ответственность','Один договор и один ответственный за результат, а не цепочка подрядчиков'],
-  ['04','Документы и годность','Учёт, госрегистрация, лётная годность и сертификат эксплуатанта оформляем мы'],
-  ['05','Страхование','Оформляем страховку и работаем со страховщиками под ваши полёты'],
-  ['06','Дрон как сервис','Можно без своего сертификата и пилота, вы платите за результат'],
-  ['07','Партнёрская модель','Реферал, работа в регионе с делением выручки, борта на спеццене'],
-  ['08','Прозрачная экономика','Считаем стоимость вылета и окупаемость маршрута заранее'],
+import Site from '../layouts/Site.astro';
+
+const SECS = [
+  {
+    n:'01', h:'Любой рельеф.\nЛюбой сезон.',
+    p:'Болото, тайга, горы, арктика. Маршрут строится по прямой: 10 км по карте остаются 10 км в воздухе. Дорожные условия перестают быть аргументом.',
+    img:'hexa-2', ratio:'1254/776', dark:false, flip:false,
+  },
+  {
+    n:'02', h:'Выше нормы -\nэто наша норма.',
+    p:'Пять навигационных систем одновременно. Тройное резервирование автопилота. Шифрованный канал на 30 км. Промышленный стандарт - это базовая комплектация.',
+    img:'heavy', ratio:'1254/757', dark:true, flip:true,
+  },
+  {
+    n:'03', h:'40 кг. 21 км.\n0 человек на борту.',
+    p:'Оператор управляет с базы. Борт выполняет рейс, возвращается, садится. Никакого водителя, сопровождающего и бортовой бригады на маршруте.',
+    img:'hexa-1', ratio:'1187/782', dark:false, flip:false,
+  },
 ];
-const cargo = drones.slice(0,4);
+
+const FEATS = [
+  ['Прямо','120 км/ч по прямой. Маршрут 10 км - 15 минут вместо 3 часов объезда.'],
+  ['Легко','Любой груз от 10 до 150 кг. Шесть моделей под любую задачу.'],
+  ['Далеко','До 68 км без нагрузки. С 30 кг - 21 км туда-обратно.'],
+  ['Надёжно','5 ГНСС, 3 IMU, 2 компаса, 2 барометра. Тройное резервирование.'],
+  ['Законно','Учёт, СЛГ, сертификат оформляем мы. Авиационная регуляторика - наша задача.'],
+  ['Точно','RTK-позиционирование: сантиметровая точность посадки на ограниченные площадки.'],
+];
+
+const LINEUP = [
+  {name:'DW-10 / DW-15',tag:'Лёгкий класс',kg:'до 15 кг',km:'до 27 км',price:'от 1 680 000 р.',docs:'Учёт без СЛГ',hi:false},
+  {name:'DW-30 / DW-40',tag:'Рабочий борт',kg:'до 40 кг',km:'до 21 км',price:'от 2 160 000 р.',docs:'Госрег + СЛГ',hi:true},
+  {name:'DW-100 / DW-150',tag:'Тяжёлый класс',kg:'до 150 кг',km:'до 9 км',price:'по запросу',docs:'Госрег + СЛГ',hi:false},
+];
+
+const withUs = [
+  ['ЗАДАЧА + ПОДБОР','Разбираемся в вашей задаче','Подбираем борт под груз, маршрут и условия'],
+  ['ДОКУМЕНТЫ + СОГЛАСОВАНИЯ','Все регуляторные шаги - на нас','Учёт, регистрация, сертификаты без вашего участия'],
+  ['ПОСТАВКА + ЗАПУСК','Доставляем и запускаем в работу','Поставка, настройка, обучение пилота и первый вылет'],
+  ['СЕРВИС + СОПРОВОЖДЕНИЕ','Поддержка после запуска','Запчасти, ТО, консультации на всём сроке эксплуатации'],
+];
+const without = [
+  ['Поиск поставщика','Модели, производители, сценарии - разбираться самому'],
+  ['Характеристики','Что реально означают заявленные цифры с грузом'],
+  ['Предложения','Несколько раундов переговоров с поставщиками'],
+  ['Сравнение','Без единого стандарта - риск выбрать не то'],
+  ['Решение о покупке','Риск ошибки без опыта с грузовыми дронами'],
+  ['Договор','Авиационная специфика без юридического опыта'],
+  ['Приёмка поставки','Без технического сопровождения при приёмке'],
+  ['Регуляторика','Росавиация, учёт, регистрация, документы - самому'],
+  ['Обучение пилота','Мало специалистов на рынке, дорогое обучение'],
+  ['Запуск в работу','Без сопровождения - выше риск ошибки в первых полётах'],
+  ['Сервис при поломке','Отдельно искать, кто обслужит вашу модель'],
+];
+
+const ss = (s) => `/drones/${s}-400.webp 400w, /drones/${s}-800.webp 800w, /drones/${s}-1200.webp 1200w`;
 ---
-<Base title="" description="DronWay, дроны под ключ: подбор у разных поставщиков, поставка, документы, эксплуатация, страхование и партнёрство" active="/">
+<Site title="" active="/" description="Промышленные грузовые беспилотники от 10 до 150 кг под ключ: подбор, поставка, документы и легальные полёты.">
 
-  <!-- HERO с видео-фоном ЧК-9 -->
-  <section class="hero hero-video">
-    <div class="hero-bg">
-      <video autoplay muted loop playsinline poster="/images/ck9.jpg" class="hero-vid">
-        <source src="/video/ck9.mp4" type="video/mp4" />
-      </video>
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="wrap hero-wrap">
-      <div class="eyebrow" style="color:#6BA0FF;">Дроны под ключ</div>
-      <h1>От завода до легального полёта, всё в одних руках</h1>
-      <p>DronWay это единый интегратор по дронам. Подбираем технику у разных производителей, поставляем, оформляем документы, держим эксплуатацию, страхуем и развиваем партнёров. Вы получаете не коробку, а готовое решение под задачу.</p>
-      <div class="cta">
-        <a href="/contacts" class="btn lg">Получить расчёт</a>
-        <a href="/catalog" class="btn lg ghost">Смотреть каталог</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow"><i></i><span>ГРУЗОВЫЕ БЕСПИЛОТНИКИ</span></div>
+      <h1 class="sg">
+        <span class="h1-q h1a">Дороги?</span>
+        <span class="h1-a h1b">Мы выше этого.</span>
+      </h1>
+      <p class="lead hsub">Промышленные беспилотники от 10 до 150 кг и любой тип борта под задачу.</p>
+      <div class="hero-types hsub">
+        <div class="ht"><b>01</b><span>Мультироторные коптеры</span></div>
+        <div class="ht"><b>02</b><span>Самолётного типа (фикседвинг)</span></div>
+        <div class="ht"><b>03</b><span>Вертолётного типа (тяжёлые грузовые)</span></div>
+        <div class="ht"><b>04</b><span>VTOL гибриды и конвертопланы</span></div>
+        <div class="ht"><b>05</b><span>Привязные</span></div>
+        <div class="ht"><b>06</b><span>Дроны замкнутых пространств</span></div>
+        <div class="ht"><b>07</b><span>Контактные комплексы для ЛЭП</span></div>
+        <div class="ht"><b>08</b><span>Складские и инфраструктурные</span></div>
       </div>
-      <div class="path"><div class="dot"></div><div class="seg"></div><div class="dot"></div><div class="seg"></div><div class="dot"></div><div class="seg"></div><div class="dot"></div><div class="seg"></div><div class="dot end"></div></div>
+      <div class="btn-row hbtn">
+        <a class="btn-p" href="/contacts">Запросить расчёт</a>
+        <a class="btn-s" href="/catalog">Смотреть линейку →</a>
+      </div>
+      <div class="stats hst">
+        <div class="stat"><b class="sg">150 кг</b><span>макс. нагрузка</span></div>
+        <div class="stat"><b class="sg">68 км</b><span>без груза</span></div>
+        <div class="stat"><b class="sg">5</b><span>ГНСС систем</span></div>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="glow"></div>
+      <img class="himg" src="/drones/heavy-800.webp" srcset={ss('heavy')}
+        sizes="(max-width:860px) 92vw, 600px" style="aspect-ratio:1254/757"
+        fetchpriority="high" alt="Тяжёлый грузовой дрон DronWay DW-150" />
+      <div class="hero-cap hst"><span>DW-150 · 150 КГ · ТЯЖЁЛЫЙ КЛАСС</span></div>
     </div>
   </section>
 
-  <!-- ЛИНЕЙКА БОРТОВ — три панели с фото -->
-  <DroneLineup />
+  <!-- SCROLL SECTIONS -->
+  {SECS.map((s) => (
+    <section class={`sec ${s.dark ? 'dark' : (s.flip ? 'surf' : 'plain')}`}>
+      {!s.flip && (
+        <div class={`stage ${s.dark ? 'dark' : ''}`}>
+          <div class="sglow"></div>
+          <img class="stage-img" src={`/drones/${s.img}-800.webp`} srcset={ss(s.img)}
+            sizes="(max-width:860px) 80vw, 520px" style={`aspect-ratio:${s.ratio}`}
+            loading="lazy" decoding="async" alt="Грузовой дрон DronWay" />
+        </div>
+      )}
+      <div class="copy">
+        <div class="reveal">
+          <span class="num sg">{s.n}</span>
+          <h2 class="sg" set:html={s.h.replace('\n','<br>')}></h2>
+          <p>{s.p}</p>
+        </div>
+      </div>
+      {s.flip && (
+        <div class={`stage ${s.dark ? 'dark' : ''}`}>
+          <div class="sglow"></div>
+          <img class="stage-img" src={`/drones/${s.img}-800.webp`} srcset={ss(s.img)}
+            sizes="(max-width:860px) 80vw, 520px" style={`aspect-ratio:${s.ratio}`}
+            loading="lazy" decoding="async" alt="Грузовой дрон DronWay DW-150" />
+        </div>
+      )}
+    </section>
+  ))}
 
-  <!-- КАТАЛОГ -->
-  <section class="sec white">
-    <div class="wrap">
-      <div class="eyebrow">Каталог</div>
-      <h2 class="h">Грузовая линейка DW, от 10 до 150 кг</h2>
-      <p class="lead">Грузовые мультироторы под доставку и снабжение. Порог 30 кг делит технику на лёгкий и тяжёлый путь по документам</p>
-      <div class="grid g4">
-        {cargo.map((d) => (
-          <a class="card" href={`/catalog/${d.slug}`}>
-            <div class="n">{d.frame.toUpperCase()}</div>
-            <h3>{d.name}</h3>
-            <p>{d.payload} кг · {d.flight} мин</p>
-            <span class="more">Подробнее →</span>
+  <!-- CONTRAST SCHEME (04) -->
+  <section class="block scheme-block plain">
+    <div class="reveal">
+      <span class="kicker">ВНЕДРЕНИЕ</span>
+      <h2 class="sg blockh schemeh">Один договор. Весь путь.</h2>
+      <p class="block-lead">Самостоятельно внедрить грузовой дрон - это 11 отдельных шагов, и на каждом свой риск и своя трата времени. С DronWay их четыре, и все на нашей стороне.</p>
+    </div>
+
+    <div class="scheme-grid reveal">
+      <!-- С нами -->
+      <div class="sch-col sch-us">
+        <div class="sch-head sch-head-us"><span class="sch-count sg">4 шага</span><span class="sch-label">С нами</span></div>
+        {withUs.map(([cat,title,desc]) => (
+          <div class="sch-item">
+            <div class="sch-ico sch-ico-us">✓</div>
+            <div class="sch-text">
+              <div class="sch-cat">{cat}</div>
+              <div class="sch-title sg">{title}</div>
+              <div class="sch-desc">{desc}</div>
+            </div>
+          </div>
+        ))}
+        <div class="sch-foot sch-foot-good">Быстро · Понятно · Рабочий результат</div>
+      </div>
+
+      <!-- Без нас -->
+      <div class="sch-col sch-without">
+        <div class="sch-head sch-head-wo"><span class="sch-count sg">11 шагов</span><span class="sch-label">Без нас</span></div>
+        {without.map(([title,desc], i) => (
+          <div class="sch-item">
+            <div class="sch-ico sch-ico-wo sg">{i + 1}</div>
+            <div class="sch-text">
+              <div class="sch-title sch-title-sm sg">{title}</div>
+              <div class="sch-desc">{desc}</div>
+            </div>
+          </div>
+        ))}
+        <div class="sch-foot sch-foot-warn">Поиск · Ошибки · Потеря времени и денег</div>
+      </div>
+    </div>
+
+    <a class="clink reveal" href="/process">Полная схема внедрения →</a>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="block surf">
+    <div class="reveal">
+      <span class="kicker">ПОЧЕМУ ДРОН</span>
+      <h2 class="sg blockh">Шесть причин<br>выбрать воздух.</h2>
+    </div>
+    <div class="grid3">
+      {FEATS.map(([t,b], i) => (
+        <div class="reveal" style={`transition-delay:${i*0.06}s`}>
+          <div class="fc">
+            <div class="ico"><i></i></div>
+            <h3 class="sg">{t}</h3>
+            <p>{b}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- LINEUP -->
+  <section class="block plain">
+    <div class="reveal">
+      <span class="kicker">ЛИНЕЙКА</span>
+      <h2 class="sg blockh">От 10 до 150 кг.</h2>
+    </div>
+    <div class="grid3">
+      {LINEUP.map((c, i) => (
+        <div class="reveal" style={`transition-delay:${i*0.08}s`}>
+          <a class={`card ${c.hi ? 'hi' : ''}`} href="/catalog">
+            {c.hi && <div class="badge">ВЫБОР КЛИЕНТОВ</div>}
+            <div class="hd"><div class="cn sg">{c.name}</div><div class="ct">{c.tag}</div></div>
+            <div class="row"><span class="k">Нагрузка</span><span class="v">{c.kg}</span></div>
+            <div class="row"><span class="k">Расстояние</span><span class="v">{c.km}</span></div>
+            <div class="row"><span class="k">Цена</span><span class="v">{c.price}</span></div>
+            <div class="docs">{c.docs}</div>
           </a>
-        ))}
-      </div>
-      <div style="margin-top:26px;"><a href="/catalog" class="btn">Весь каталог и виды дронов</a></div>
+        </div>
+      ))}
     </div>
   </section>
 
-  <!-- СХЕМЫ: С нами / Без нас -->
-  <SchemesSection />
-
-  <!-- УСЛУГИ -->
-  <section class="sec">
-    <div class="wrap">
-      <div class="eyebrow">Услуги</div>
-      <h2 class="h">Восемь услуг, которые закрывают весь цикл</h2>
-      <div class="grid g4">
-        {services.map((s) => (
-          <a class="card" href={`/services/${s.slug}`}>
-            <div class="n">{s.icon}</div>
-            <h3 style="font-size:18px;">{s.name}</h3>
-            <p>{s.short}</p>
-          </a>
-        ))}
-      </div>
+  <!-- CTA -->
+  <section class="cta">
+    <div class="reveal">
+      <h2 class="sg">Готовы к расчёту.</h2>
+      <p>Опишите объект и маршрут - подберём модель и посчитаем экономику рейса до подписания договора.</p>
+      <a class="cta-btn" href="/contacts">Запросить расчёт - dronway.com</a>
     </div>
   </section>
 
-  <!-- ПРИМЕНЕНИЕ -->
-  <section class="sec dark">
-    <div class="wrap">
-      <div class="eyebrow" style="color:#6BA0FF;">Применение</div>
-      <h2 class="h">Что обследуем, снимаем и возим</h2>
-      <div class="grid g4">
-        {applications.map((a) => (
-          <a class="card" href={`/applications/${a.slug}`}>
-            <div class="n">{a.tag.toUpperCase()}</div>
-            <h3 style="font-size:18px;">{a.name}</h3>
-            <p>{a.short}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+</Site>
 
-  <!-- ПОЧЕМУ МЫ -->
-  <section class="sec white">
-    <div class="wrap">
-      <div class="eyebrow">Почему DronWay</div>
-      <h2 class="h">Полный пакет под ключ, какого нет у одного игрока сразу</h2>
-      <p class="lead">На рынке кто-то делает только съёмку, кто-то только документы, кто-то только продаёт борта. Мы собираем весь цикл в одну услугу с единой ответственностью за результат</p>
-      <div class="grid g4">
-        {why.map(([n,t,d]) => (
-          <div class="card"><div class="n">{n}</div><h3 style="font-size:18px;">{t}</h3><p>{d}</p></div>
-        ))}
-      </div>
-      <div style="margin-top:46px;"><CtaBand /></div>
-    </div>
-  </section>
+<style>
+  /* hero */
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+  .hero-copy{display:flex;flex-direction:column;justify-content:center;padding:120px 56px 80px;background:var(--w)}
+  .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+  .eyebrow i{width:24px;height:2px;background:var(--bl);border-radius:2px;display:block}
+  .eyebrow span{color:var(--bl);font-size:12px;font-weight:700;letter-spacing:3px}
+  h1{line-height:.92;letter-spacing:-2px}
+  .h1-q{display:block;font-size:clamp(44px,5.5vw,82px);font-weight:300;color:var(--mul)}
+  .h1-a{display:block;font-size:clamp(44px,5.5vw,82px);font-weight:700;color:var(--ink);margin-top:8px}
+  .lead{color:var(--ink);font-size:19px;font-weight:500;line-height:1.6;max-width:430px;margin:28px 0 6px}
+  .hero-types{display:grid;grid-template-columns:1fr 1fr;gap:11px 26px;margin:18px 0 36px;max-width:470px}
+  .ht{display:flex;gap:10px;align-items:baseline;font-size:13.5px;line-height:1.3;color:var(--ink)}
+  .ht b{font-family:'Space Grotesk';color:var(--bl);font-size:12px;font-weight:700;min-width:18px;flex-shrink:0}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn-p{background:var(--bl);color:#fff;padding:14px 30px;border-radius:7px;font-size:13px;font-weight:700;transition:background .2s}
+  .btn-p:hover{background:#1855cc}
+  .btn-s{color:var(--bl);background:rgba(30,99,233,.09);border:1.5px solid var(--bl);padding:14px 30px;border-radius:7px;font-size:13px;font-weight:700;transition:background .2s,color .2s}
+  .btn-s:hover{background:var(--bl);color:#fff}
+  .stats{display:flex;margin-top:60px;padding-top:28px;border-top:1px solid var(--line)}
+  .stat{padding-right:40px}
+  .stat b{font-size:26px;font-weight:700;color:var(--bl);line-height:1;display:block}
+  .stat span{font-size:11px;color:var(--mul);margin-top:5px;display:block}
+  .hero-photo{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(120% 120% at 55% 44%, #EDF3FB 0%, #DCE9F7 52%, #C9DCF1 100%)}
+  .ring{position:absolute;border-radius:50%;top:48%;left:50%;transform:translate(-50%,-50%)}
+  .ring.r1{width:400px;height:400px;border:1px solid rgba(30,99,233,.08)}
+  .ring.r2{width:280px;height:280px;border:1px solid rgba(30,99,233,.12)}
+  .glow{position:absolute;width:56%;aspect-ratio:1;border-radius:50%;top:44%;left:50%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(30,99,233,.12) 0%, rgba(30,99,233,0) 64%);filter:blur(8px)}
+  .hero-photo img{position:relative;width:84%;max-width:600px;height:auto;filter:drop-shadow(0 30px 46px rgba(20,40,80,.18))}
+  .hero-cap{position:absolute;bottom:32px;text-align:center}
+  .hero-cap span{font-size:13px;font-weight:700;color:rgba(14,63,168,.5);letter-spacing:1.5px}
 
-</Base>
+  /* scroll sections */
+  .sec{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;border-top:1px solid var(--line)}
+  .sec.dark{background:#0B0F17;border-top-color:#1a2230}
+  .sec.surf{background:var(--surf)}
+  .sec.plain{background:var(--w)}
+  .stage{position:relative;min-height:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(120% 120% at 50% 46%, #EEF4FB 0%, #DFEAF7 55%, #CFE0F2 100%)}
+  .stage.dark{background:radial-gradient(115% 115% at 50% 44%, #18222F 0%, #0E141E 60%, #090D14 100%)}
+  .sglow{position:absolute;width:58%;aspect-ratio:1;border-radius:50%;top:44%;left:50%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(30,99,233,.12) 0%, rgba(30,99,233,0) 64%);filter:blur(8px)}
+  .stage.dark .sglow{background:radial-gradient(circle, rgba(201,168,76,.18) 0%, rgba(201,168,76,0) 64%)}
+  .stage img{position:relative;width:82%;max-width:520px;height:auto;filter:drop-shadow(0 26px 40px rgba(20,40,80,.16))}
+  .stage.dark img{filter:drop-shadow(0 22px 46px rgba(0,0,0,.5))}
+  .copy{padding:80px 64px;display:flex;flex-direction:column;justify-content:center}
+  .num{font-size:72px;font-weight:700;line-height:1;margin-bottom:8px;display:block;color:rgba(14,20,32,.05)}
+  .sec.surf .num{color:rgba(30,99,233,.07)}
+  .sec.dark .num{color:rgba(201,168,76,.16)}
+  .copy h2{font-size:clamp(26px,2.6vw,42px);font-weight:700;line-height:1.1;margin-bottom:24px;letter-spacing:-1px;color:var(--ink)}
+  .sec.dark .copy h2{color:#fff}
+  .copy p{color:var(--mu);font-size:15px;line-height:1.8;max-width:380px}
+  .sec.dark .copy p{color:rgba(255,255,255,.62)}
+
+  /* contrast scheme */
+  .scheme-block .schemeh{margin-bottom:18px}
+  .block-lead{color:var(--mu);font-size:15px;line-height:1.7;max-width:560px;margin-bottom:44px}
+  .scheme-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  .sch-col{display:flex;flex-direction:column}
+  .sch-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-radius:10px 10px 0 0;margin-bottom:2px}
+  .sch-head-us{background:var(--ink)}
+  .sch-head-wo{background:#A9B4C2}
+  .sch-count{font-size:20px;font-weight:700;color:#fff}
+  .sch-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+  .sch-item{display:flex;gap:14px;align-items:flex-start;padding:15px 18px;background:var(--w);border:1px solid var(--line);border-top:none}
+  .sch-us .sch-item{border-left:3px solid var(--bl)}
+  .sch-without .sch-item{border-left:3px solid var(--mul)}
+  .sch-col .sch-item:last-of-type{border-radius:0 0 10px 10px}
+  .sch-ico{flex-shrink:0;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  .sch-ico-us{background:rgba(30,99,233,.1);color:var(--bl)}
+  .sch-ico-wo{background:var(--surf);color:var(--mu);font-size:14px}
+  .sch-cat{font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--mul);text-transform:uppercase;margin-bottom:4px}
+  .sch-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.25}
+  .sch-title-sm{font-size:13.5px}
+  .sch-desc{font-size:12px;color:var(--mu);line-height:1.45;margin-top:3px}
+  .sch-foot{margin-top:10px;padding:12px 16px;border-radius:8px;font-size:12px;font-weight:600;text-align:center}
+  .sch-foot-good{background:rgba(30,99,233,.06);color:var(--bl)}
+  .sch-foot-warn{background:var(--surf);color:var(--mu)}
+  .clink{display:inline-block;margin-top:30px;color:var(--bl);font-weight:600;font-size:14px}
+
+  /* blocks */
+  .block{padding:100px 48px;border-top:1px solid var(--line)}
+  .block.surf{background:var(--surf)}
+  .block.plain{background:var(--w)}
+  .kicker{color:var(--bl);font-size:10px;font-weight:700;letter-spacing:3.5px;display:block;margin-bottom:14px}
+  .blockh{font-size:clamp(30px,3.5vw,50px);font-weight:700;margin-bottom:56px;letter-spacing:-1.5px;line-height:1.05;color:var(--ink)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .fc{background:var(--w);padding:32px 28px;border-radius:10px;border:1px solid var(--line);height:100%;transition:box-shadow .25s,transform .25s}
+  .fc:hover{box-shadow:0 6px 28px rgba(30,99,233,.1);transform:translateY(-2px)}
+  .ico{width:32px;height:32px;border-radius:8px;background:rgba(30,99,233,.08);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .ico i{width:12px;height:12px;border-radius:50%;background:var(--bl);display:block}
+  .fc h3{font-size:18px;font-weight:700;margin-bottom:10px;color:var(--ink)}
+  .fc p{color:var(--mu);font-size:13px;line-height:1.68}
+
+  /* lineup cards */
+  .card{display:block;border:1px solid var(--line);border-radius:10px;padding:28px 24px;background:var(--w);height:100%;transition:border-color .2s,transform .2s}
+  .card:hover{border-color:var(--bl);transform:translateY(-2px)}
+  .card.hi{border:2px solid var(--bl);background:rgba(30,99,233,.03)}
+  .badge{display:inline-block;margin-bottom:14px;background:rgba(30,99,233,.1);color:var(--bl);font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 10px;border-radius:4px}
+  .cn{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .card.hi .cn{color:var(--bl)}
+  .ct{font-size:11px;color:var(--mu)}
+  .hd{margin-bottom:20px}
+  .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .row .k{color:var(--mu)}
+  .row .v{font-weight:600;color:var(--ink)}
+  .card.hi .row .v{color:var(--bl)}
+  .docs{margin-top:14px;font-size:10px;color:var(--mul);letter-spacing:1px}
+
+  /* cta */
+  .cta{padding:100px 48px;background:#0E3FA8;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .cta h2{font-size:clamp(36px,5vw,68px);font-weight:700;color:#fff;line-height:1;margin-bottom:20px;letter-spacing:-2px}
+  .cta p{color:rgba(255,255,255,.5);font-size:16px;margin-bottom:40px;max-width:420px;line-height:1.7}
+  .cta-btn{background:var(--gold);color:#0E1420;padding:16px 40px;border-radius:7px;font-size:14px;font-weight:700;transition:opacity .2s}
+  .cta-btn:hover{opacity:.88}
+
+  @media (max-width:860px){
+    .hero,.sec{grid-template-columns:1fr}
+    .scheme-grid{grid-template-columns:1fr}
+    .hero-photo{min-height:60vh;order:2}
+    .hero-copy{padding:96px 24px 60px}
+    .copy{padding:60px 24px}
+    .sec .copy{order:-1}
+    .sec .stage{min-height:46vh;order:0}
+    .block,.cta{padding:64px 24px}
+    .grid3{grid-template-columns:1fr}
+    .stats{flex-wrap:wrap;gap:18px}
+  }
+  @media (max-width:560px){
+    .btn-row{flex-direction:column-reverse;align-items:stretch}
+    .btn-p,.btn-s{text-align:center}
+    .hero-types{grid-template-columns:1fr;max-width:340px}
+  }
+</style>

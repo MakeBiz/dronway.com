@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const scenarios = [
+  {
+    n: '01', title: 'Снабжение труднодоступных площадок',
+    text: 'Доставка ЗИП, оборудования и расходников бригадам и на удалённые точки, куда нет дорог. Борт идёт по прямой: 10 км по карте остаются 10 км в воздухе, без объездов, переправ и зависимости от сезона.',
+    tags: ['по прямой, без дорог', 'точечная доставка', 'до 150 кг груза'],
+  },
+  {
+    n: '02', title: 'Тяжёлая логистика для добычи и сырья',
+    text: 'Север и Сибирь: буровые, карьеры, удалённые промыслы. Дальность с грузом - до 21 км в одну сторону, 42 км туда-обратно, маршрут строится по прямой, без зависимости от дорог, переправ и сезона.',
+    tags: ['21 км в одну сторону', '42 км туда-обратно', 'любой сезон и рельеф'],
+  },
+  {
+    n: '03', title: 'Легальная эксплуатация через эксплуатанта',
+    text: 'Заказчику не нужно самому получать все допуски: полёты выполняет эксплуатант, а заказчик легально пользуется услугой. На сезонных задачах это выходит в серьёзные деньги - до 50 млн руб. за летний сезон на услугах дронов в условиях Якутии.',
+    tags: ['до 50 млн ₽ за сезон', 'полёты на эксплуатанте', 'без своего парка'],
+  },
+];
+
+const photos = [
+  ['field-30','до 30 кг','лёгкий гексакоптер','Грузовой дрон DronWay до 30 кг'],
+  ['field-40','40 кг','рабочий гексакоптер','Грузовой дрон DronWay 40 кг'],
+  ['field-150','до 150 кг','тяжёлый квадрокоптер','Тяжёлый грузовой дрон DronWay 150 кг'],
+];
+const fss = (s) => `/field/${s}-400.webp 400w, /field/${s}-800.webp 800w, /field/${s}-1200.webp 1200w`;
+---
+<Base title="Кейсы" description="Кейсы и сценарии DronWay: тяжёлая логистика на Севере и в Сибири, снабжение труднодоступных площадок, легальная эксплуатация через эксплуатанта" active="">
+  <PageHead eyebrow="Кейсы и сценарии" title="Где грузовые дроны уже окупаются"
+    lead="Реальные борта на реальных объектах и экономика, которая делает дрон выгоднее традиционной логистики на коротком и среднем плече"
+    crumbs={[{label:'Кейсы'}]} />
+
+  <div class="specband">
+    <div class="wrap specband-inner">
+      <div class="sb-item"><span class="sb-num">150</span><span class="sb-unit">бортов</span><span class="sb-label">поставлено за прошлый год</span></div>
+      <div class="sb-div"></div>
+      <div class="sb-item"><span class="sb-num">10-150</span><span class="sb-unit">кг</span><span class="sb-label">диапазон полезной нагрузки</span></div>
+      <div class="sb-div"></div>
+      <div class="sb-item"><span class="sb-num">42</span><span class="sb-unit">км</span><span class="sb-label">с грузом туда-обратно</span></div>
+    </div>
+  </div>
+
+  <section class="sec white">
+    <div class="wrap">
+      <div class="eyebrow">Сценарии</div>
+      <h2 class="h">Три ситуации, где дрон меняет экономику</h2>
+      <div class="cases-grid">
+        {scenarios.map((s) => (
+          <div class="case-card">
+            <span class="case-n">{s.n}</span>
+            <h3 class="case-h">{s.title}</h3>
+            <p class="case-p">{s.text}</p>
+            <div class="chips">{s.tags.map((t) => (<span>{t}</span>))}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow">Борта в работе</div>
+      <h2 class="h">Наши машины на объектах</h2>
+      <div class="demo-row">
+        <div class="demo-video"><video src="/video/dw40-drop.mp4" poster="/video/dw40-drop-poster.jpg" controls playsinline preload="metadata"></video></div>
+        <div class="demo-cap">
+          <div class="eyebrow">Сброс груза в полёте</div>
+          <p>Борт DW-40 несёт груз и выполняет сброс в заданной точке - реальная съёмка на объекте.</p>
+          <a class="more" href="/catalog/dw-40">Характеристики DW-40 →</a>
+        </div>
+      </div>
+      <div class="grid g3 photo-grid">
+        {photos.map(([slug,kg,frame,alt]) => (
+          <figure class="ph-item">
+            <div class="ph"><img src={`/field/${slug}-800.webp`} srcset={fss(slug)} sizes="(max-width:760px) 90vw, 340px" alt={alt} loading="lazy" decoding="async" /></div>
+            <figcaption class="pcap"><b>{kg}</b> · {frame}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="table-note" style="margin-top:16px;">Точные характеристики и таблицы дальности по каждой модели - в <a href="/catalog" style="color:var(--bl);font-weight:600;">каталоге</a>.</p>
+      <div style="margin-top:46px;"><CtaBand /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  .case-card{background:var(--w);border:1px solid var(--line);border-radius:12px;padding:30px 26px;height:100%;display:flex;flex-direction:column}
+  .case-n{font-family:'Space Grotesk';font-size:40px;font-weight:700;color:rgba(30,99,233,.12);line-height:1;display:block;margin-bottom:8px}
+  .case-h{font-family:'Space Grotesk';font-size:20px;font-weight:700;line-height:1.2;margin-bottom:12px}
+  .case-p{color:var(--mu);font-size:14px;line-height:1.7;margin-bottom:16px}
+  .case-card .chips{margin-top:auto}
+  .photo-grid{margin-top:34px}
+  .photo-grid .ph-item{margin:0}
+  .demo-row{display:flex;gap:26px;align-items:flex-start;margin:26px 0 8px;flex-wrap:wrap}
+  .demo-video{max-width:300px;flex-shrink:0;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .demo-video video{width:100%;display:block}
+  .demo-cap{flex:1;min-width:240px}
+  .demo-cap p{color:var(--mu);margin:10px 0 14px;line-height:1.6}
+  .photo-grid .ph{aspect-ratio:4/3;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#eef2f7}
+  .photo-grid .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+  .photo-grid .ph-item:hover .ph img{transform:scale(1.03)}
+  .photo-grid .pcap{font-size:13px;color:var(--mu);margin-top:10px}
+  .photo-grid .pcap b{font-family:'Space Grotesk';color:var(--bl);font-weight:700}
+  @media(max-width:860px){.cases-grid{grid-template-columns:1fr}}
+</style>

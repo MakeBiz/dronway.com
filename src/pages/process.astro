@@ -3,18 +3,48 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { stages } from '../data/stages.js';
+
+const docs = [
+  ['Учёт в Росавиации', 'Входит в базу (лёгкий класс)', 'Обязателен для всех бортов'],
+  ['Свидетельство о госрегистрации + акт оценки', '~100 тыс. руб.', 'Для бортов свыше 30 кг, оформляем мы'],
+  ['Лётная годность (СЛГ)', 'Оплачивается отдельно', 'Тяжёлый класс свыше 30 кг'],
+  ['Сертификат эксплуатанта', 'Оплачивается отдельно', 'Коммерческая эксплуатация'],
+  ['Страхование', 'Оплачивается отдельно', 'Ответственность + груз'],
+  ['Согласование полётов (FlyDrone / ЭПР)', 'Сопровождаем', 'В зоне ЭПР вместо СЛГ - акт оценки'],
+];
+
+const withUs = [
+  ['ЗАДАЧА + ПОДБОР','Разбираемся в вашей задаче','Подбираем борт под груз, маршрут и условия'],
+  ['ДОКУМЕНТЫ + СОГЛАСОВАНИЯ','Все регуляторные шаги - на нас','Учёт, регистрация, сертификаты без вашего участия'],
+  ['ПОСТАВКА + ЗАПУСК','Доставляем и запускаем в работу','Поставка, настройка, обучение пилота и первый вылет'],
+  ['СЕРВИС + СОПРОВОЖДЕНИЕ','Поддержка после запуска','Запчасти, ТО, консультации на всём сроке эксплуатации'],
+];
+const without = [
+  ['Поиск поставщика','Модели, производители, сценарии - разбираться самому'],
+  ['Характеристики','Что реально означают заявленные цифры с грузом'],
+  ['Предложения','Несколько раундов переговоров с поставщиками'],
+  ['Сравнение','Без единого стандарта - риск выбрать не то'],
+  ['Решение о покупке','Риск ошибки без опыта с грузовыми дронами'],
+  ['Договор','Авиационная специфика без юридического опыта'],
+  ['Приёмка поставки','Без технического сопровождения при приёмке'],
+  ['Регуляторика','Росавиация, учёт, регистрация, документы - самому'],
+  ['Обучение пилота','Мало специалистов на рынке, дорогое обучение'],
+  ['Запуск в работу','Без сопровождения - выше риск ошибки в первых полётах'],
+  ['Сервис при поломке','Отдельно искать, кто обслужит вашу модель'],
+];
 ---
 <Base title="Этапы работы" description="Этапы работы DronWay: от подбора и поставки до документов, лётной годности, разрешений и эксплуатации" active="/process">
   <PageHead eyebrow="Как мы работаем" title="Путь от завода до полёта, семь этапов"
     lead="Показываем весь маршрут прозрачно. На каждом этапе понятно, что происходит и что берём на себя мы"
     crumbs={[{label:'Этапы'}]} />
+
   <section class="sec white">
     <div class="wrap">
       <div class="grid g2" style="margin-top:0;">
         {stages.map((s) => (
           <div class="card">
             <div style="display:flex;align-items:center;gap:14px;">
-              <div style="width:40px;height:40px;border-radius:11px;background:var(--ink);color:#fff;font-family:'Montserrat';font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">{s.num}</div>
+              <div class="stage-num">{s.num}</div>
               <h3 style="margin:0;">{s.name}</h3>
             </div>
             <p style="margin-top:14px;">{s.desc}</p>
@@ -22,7 +52,77 @@ import { stages } from '../data/stages.js';
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- Документы и легализация -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow">Документы и легализация</div>
+      <h2 class="h" style="font-size:30px;">Что и когда оформляется</h2>
+      <p class="lead">Лёгкий класс (до 30 кг) - минимум процедур. Тяжёлый класс - полный цикл, который мы ведём за вас. В зонах ЭПР (Постановление 641) СЛГ не требуется, достаточно акта оценки.</p>
+      <div class="lineup-table-wrap">
+        <table class="lineup-table">
+          <thead><tr><th>Документ</th><th>Кто платит</th><th>Примечание</th></tr></thead>
+          <tbody>
+            {docs.map(([d,pay,note]) => (
+              <tr><td><strong>{d}</strong></td><td class="td-blue">{pay}</td><td>{note}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Схема С нами / Без нас -->
+  <section class="sec white">
+    <div class="wrap">
+      <div class="eyebrow">Внедрение</div>
+      <h2 class="h" style="font-size:30px;">Один договор вместо одиннадцати шагов</h2>
+      <p class="lead">Самостоятельно внедрить грузовой дрон - это 11 отдельных шагов, и на каждом свой риск. С DronWay их четыре, и все на нашей стороне.</p>
+      <div class="scheme-grid">
+        <div class="sch-col sch-us">
+          <div class="sch-head sch-head-us"><span class="sch-count">4 шага</span><span class="sch-label">С нами</span></div>
+          {withUs.map(([cat,title,desc]) => (
+            <div class="sch-item"><div class="sch-ico sch-ico-us">✓</div><div class="sch-text"><div class="sch-cat">{cat}</div><div class="sch-title">{title}</div><div class="sch-desc">{desc}</div></div></div>
+          ))}
+          <div class="sch-foot sch-foot-good">Быстро · Понятно · Рабочий результат</div>
+        </div>
+        <div class="sch-col sch-without">
+          <div class="sch-head sch-head-wo"><span class="sch-count">11 шагов</span><span class="sch-label">Без нас</span></div>
+          {without.map(([title,desc], i) => (
+            <div class="sch-item"><div class="sch-ico sch-ico-wo">{i + 1}</div><div class="sch-text"><div class="sch-title sch-title-sm">{title}</div><div class="sch-desc">{desc}</div></div></div>
+          ))}
+          <div class="sch-foot sch-foot-warn">Поиск · Ошибки · Потеря времени и денег</div>
+        </div>
+      </div>
       <div style="margin-top:46px;"><CtaBand title="Готовы пройти этот путь с вами" text="От первой консультации до регулярных легальных полётов под единой ответственностью" /></div>
     </div>
   </section>
 </Base>
+
+<style>
+  .stage-num{width:40px;height:40px;border-radius:11px;background:var(--ink);color:#fff;font-family:'Space Grotesk';font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .scheme-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;margin-top:40px}
+  .sch-col{display:flex;flex-direction:column}
+  .sch-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-radius:10px 10px 0 0;margin-bottom:2px}
+  .sch-head-us{background:var(--ink)}
+  .sch-head-wo{background:#A9B4C2}
+  .sch-count{font-family:'Space Grotesk';font-size:20px;font-weight:700;color:#fff}
+  .sch-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+  .sch-item{display:flex;gap:14px;align-items:flex-start;padding:15px 18px;background:var(--w);border:1px solid var(--line);border-top:none}
+  .sch-us .sch-item{border-left:3px solid var(--bl)}
+  .sch-without .sch-item{border-left:3px solid var(--mul)}
+  .sch-col .sch-item:last-of-type{border-radius:0 0 10px 10px}
+  .sch-ico{flex-shrink:0;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Space Grotesk'}
+  .sch-ico-us{background:rgba(30,99,233,.1);color:var(--bl)}
+  .sch-ico-wo{background:var(--surf);color:var(--mu);font-size:14px}
+  .sch-cat{font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--mul);text-transform:uppercase;margin-bottom:4px}
+  .sch-title{font-family:'Space Grotesk';font-size:14px;font-weight:700;color:var(--ink);line-height:1.25}
+  .sch-title-sm{font-size:13.5px}
+  .sch-desc{font-size:12px;color:var(--mu);line-height:1.45;margin-top:3px}
+  .sch-foot{margin-top:10px;padding:12px 16px;border-radius:8px;font-size:12px;font-weight:600;text-align:center}
+  .sch-foot-good{background:rgba(30,99,233,.06);color:var(--bl)}
+  .sch-foot-warn{background:var(--surf);color:var(--mu)}
+  @media(max-width:860px){.scheme-grid{grid-template-columns:1fr}}
+</style>
